@@ -5,8 +5,8 @@ const Home = () => {
   return (
     <div className="container">
       <Jumbotron>
-        <h1>Starter Stack</h1>
-        <p>We are here to be awesome</p>
+        <h1>Good Enuff</h1>
+        <p>The Modern Tracking App</p>
       </Jumbotron>
     </div>
   );

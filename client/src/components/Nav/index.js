@@ -13,6 +13,9 @@ function Nav() {
               Logout
             </a>
           </li>
+          <li className="mx-1">
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
         </ul>
       );
     } else {
@@ -34,7 +37,7 @@ function Nav() {
       <h1>
         <Link to="/">
           <span role="img" aria-label="shopping bag"></span>
-          Starter Stack
+          Good Enuff
         </Link>
       </h1>
 
