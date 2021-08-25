@@ -24,6 +24,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  goals: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Goal",
+    },
+  ],
 });
 
 // set up pre-save middleware to create password
