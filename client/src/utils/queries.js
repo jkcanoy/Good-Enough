@@ -5,16 +5,15 @@ export const QUERY_USER = gql`
     user {
       firstName
       lastName
-      orders {
+      goals {
         _id
-        purchaseDate
-        products {
+        active
+        dateCreated
+        dateArchived
+        metrics {
           _id
-          name
-          description
-          price
-          quantity
-          image
+          date
+          completed
         }
       }
     }
