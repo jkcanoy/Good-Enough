@@ -30,7 +30,7 @@ const goalSchema = new Schema({
   },
   task: {
     type: Schema.Types.ObjectId,
-    ref: "DeafultTask",
+    ref: "DefaultTask",
   },
 });
 
