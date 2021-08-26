@@ -20,7 +20,7 @@ const goalSchema = new Schema({
   },
   date_archived: {
     type: Date,
-    required: true,
+    required: false,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
