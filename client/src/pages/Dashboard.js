@@ -1,69 +1,172 @@
 import React from "react";
-import { Accordion, Form, Button, Col,  } from "react-bootstrap";
+import { Accordion, Form, Button, FormControl, Table  } from "react-bootstrap";
+import AnimatedRadar from "../components/Radar";
+import { CalendarNew, CalendarUpdate } from "../components/Calendar";
+
+///for the radio button, need to change the 
 
 const Dashboard = () => {
+
+    const goals = [
+        {
+            id: 1,
+            description: "Drink more water",
+            endDate: '2021/09/20'
+        },  
+        {
+            id: 2,
+            description: "Go on more walks",
+            endDate: "2021/8/30"
+        }, 
+        {
+            id: 3,
+            description: "Engage more with friends",
+            endDate: "2021/12/25"
+        }, 
+
+    ]
+
     return (
       <div className="container">
-        <Accordion defaultActiveKey="0">
+        <Accordion defaultActiveKey="3">
             <Accordion.Item eventKey="0">
-                <Accordion.Header>Goal Input</Accordion.Header>
+                <Accordion.Header>Create New Goals</Accordion.Header>
                     <Accordion.Body>
                         <Form>
-                        <Form.Select aria-label="Default select example">
-                            <option>Goal List</option>
-                            <option value="1">Health - Drink more water</option>
-                            <option value="2">Health - Become more active</option>
-                            <option value="3">Social - Engage with a friend</option>
-                            <option value="3">Family - Engage with a family member</option>
-                        </Form.Select>
-                        <Col sm={10}>
-                            <Form.Check
-                            type="radio"
-                            label="first radio"
-                            name="formHorizontalRadios"
-                            id="formHorizontalRadios1"
+                            <Form.Select aria-label="">
+                                <option>Pick a goal from the list below</option>
+                                {goals.map((goal) => (
+                                <option value={goal.id}>{goal.description}</option>
+                                ))}
+                            </Form.Select>
+                            <Form.Control
+                                type="color"
+                                id="exampleColorInput"
+                                defaultValue="#563d7c"
+                                title="Choose your color"
                             />
-                            <Form.Check
-                            type="radio"
-                            label="second radio"
-                            name="formHorizontalRadios"
-                            id="formHorizontalRadios2"
-                            />
-                            <Form.Check
-                            type="radio"
-                            label="third radio"
-                            name="formHorizontalRadios"
-                            id="formHorizontalRadios3"
-                            />
-                        </Col>
-                        <Button variant="primary" type="submit">
-                        Submit
-                        </Button>
+                            <CalendarNew/>
+                            <Button variant="primary" type="submit">
+                            Submit
+                            </Button>
                         </Form>
                     </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
-                <Accordion.Header>Goal Tracker</Accordion.Header>
+                <Accordion.Header>Edit Existing Goals</Accordion.Header>
                 <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
+                <table>
+                    <thead>
+                        <tr>
+                        <th>Goal Description</th>
+                        <th>Current End Date</th>
+                        <th>Update</th>
+                        <th>Archive</th>
+                        <th>Remove</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {goals.map((goal) => (
+                        <tr key={goal.id}>
+                            <td>
+                                <FormControl defaultValue={goal.description}></FormControl>
+                            </td>
+                            <td>
+                                <CalendarUpdate endDate={goal.endDate}/>
+                            </td>
+
+                            <td>
+                                <Button
+                                    type="button"
+                                    onClick={() => console.log("hello")}>
+                                    <span role="img" aria-label="close">
+                                    📝
+                                    </span>
+                                </Button>
+                            </td>
+                            <td>
+                                <Button
+                                    type="button"
+                                    onClick={() => console.log("hello")}>
+                                    <span role="img" aria-label="close">
+                                    🦖
+                                    </span>
+                                </Button>
+                            </td>
+                            <td>
+                                <Button
+                                    type="button"
+                                    onClick={() => console.log("hello")}>
+                                    <span role="img" aria-label="close">
+                                    ✖️
+                                    </span>
+                                </Button>
+                            </td>
+                        </tr>
+                        ))}
+                    </tbody>
+                    </table>
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
+                <Accordion.Header>Goal Tracker</Accordion.Header>
+                <Accordion.Body>
+                <p>Enter status for goals for ENTER CURRENT DATE HERE</p>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Goal</th>
+                            <th>Completed?</th>
+                            <th>Save</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {goals.map((goal) => (
+                        <tr key={goal.id}>
+                            <td>
+                            {goal.description}
+                            </td>
+                            <td>
+                            <Form>
+                                <div key={`inline-radio`} className="mb-3">
+                                <Form.Check
+                                    inline
+                                    label="Yes"
+                                    name="group1"
+                                    type="radio"
+                                    id={`inline-radio-1`}
+                                />
+                                <Form.Check
+                                    inline
+                                    checked
+                                    label="No"
+                                    name="group1"
+                                    type="radio"
+                                    id={`inline-radio-2`}
+                                />
+                                </div>
+                            </Form>
+                            </td>
+                            <td>
+                                <Button
+                                    type="button"
+                                    onClick={() => console.log("hello")}>
+                                    <span role="img" aria-label="close">
+                                    💾
+                                    </span>
+                                </Button>
+                            </td>
+                        </tr>
+                        ))}
+                    </tbody>
+                </Table>
+                </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="3">
                 <Accordion.Header>Goal Metrics</Accordion.Header>
                 <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
+                    <AnimatedRadar />
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>
