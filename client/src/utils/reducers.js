@@ -1,44 +1,46 @@
 // Import our actions from our actions file
-import { ADD_TASK, REMOVE_TASK, TASK_COMPLETE, END_OF_DAY } from './actions';
+import { ADD_GOAL, UPDATE_GOAL, ADD_METRIC, UPDATE_METRIC } from './actions';
 
 // Reducer accepts state and an action, returns a new state
 export default function reducer(state, action) {
   switch (action.type) {
-    case ADD_TASK:
+    case ADD_GOAL:
       return {
         ...state,
         goals: [...state.goals, action.payload],
+      }
+    case UPDATE_GOAL: {
+      const goalIndex = state.goals.findIndex((goal) => goal.id === action.payload.id);
+      const updatedGoal = {
+        ...state.goals[goalIndex],
+        ...action.payload,
       };
-      case REMOVE_TASK:
-        return {
-          ...state,
-          goals: [...state.goals, action.payload],
-        };
-    case TASK_COMPLETE:
+      const newGoalsList = [...state.goals];
+      newGoalsList[goalIndex] = updatedGoal;
       return {
         ...state,
-        goals: [...state.goals, action.payload],
+        goals: newGoalsList,
       };
-    case END_OF_DAY:
+    }
+    case ADD_METRIC: {
       return {
         ...state,
-        metrics: [...state.students].filter(
-          (student) => student.id !== action.payload
-        ),
+        metrics: [...state.metrics, action.payload],
+      }
+    }
+    case UPDATE_METRIC: {
+      const metricIndex = state.metrics.findIndex((metric) => metric.id === action.payload.id);
+      const updatedMetric = {
+        ...state.metrics[metricIndex],
+        ...action.payload,
       };
-
-      case TASK_COMPLETE: {
-        const goalIndex = state.goals.findIndex((goal) => goal.id === action.payload);
-        const updatedGoal = { ...state.goals[goalIndex], isComplete: false };
-  
-        const goalsCopy = [...state.goals];
-        goalsCopy[goalIndex] = updatedGoal;
-  
-        return {
-          ...state,
-          goals: goalsCopy,
-        },
+      const newMetricsList = [...state.metrics];
+      newMetricsList[metricIndex] = updatedMetric;
+      return {
+        ...state,
+        metrics: newMetricsList,
       };
+    }
     default:
       return state;
   }
