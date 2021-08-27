@@ -25,7 +25,7 @@ export const QUERY_SINGLE_USER = gql`
 
 export const QUERY_USERS = gql`
 query getUsers {
-    user {
+    users {
       _id
       firstName
       lastName

@@ -33,22 +33,35 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_GOAL = gql`
-  mutation addGoal($active: Boolean!, $tally: Number!, $date_created: Date! $date_archived: Date!) {
-    addGoal( active: true, tally: 0) {
+  mutation addGoal($active: Boolean!, $tally: Number!, $date_created: Date! $date_archived: Date) {
+    addGoal {
       _id
       active
       tally
       date_created
-      metrics ( complete: false, submission_date: ) {
-        _id
-        complete
-        submission_date
-      }
     }
-    ) 
   }
 `;
 
-// export const EDIT_GOAL = gql``;
-// export const ADD_METRIC = gql``;
+export const EDIT_GOAL = gql`
+  mutation editGoal($active: Boolean!, $tally: Number!, $date_created: Date! $date_archived: Date) {
+    editGoal {
+      _id
+      active
+      tally
+      date_created
+    }
+  }
+`;
+
+export const ADD_METRIC = gql`
+  mutation addMetric($complete: Boolean!, $date: Date!) {
+    addMetric {
+      _id
+      complete
+      date
+    }
+  }
+`;
+
 // export const EDIT_METRIC = gql``;
