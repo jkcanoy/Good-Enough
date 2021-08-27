@@ -33,9 +33,9 @@ const typeDefs = gql`
   type Query {
     user: User
     goal(id: ID!): [Goal]
-    goals: [Goal]
+    goals: [Goal]!
     metric(id: ID!): [Metric]
-    metrics: [Metric]
+    metrics: [Metric]!
   }
 
   type Mutation {
@@ -45,19 +45,53 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Auth
+    
     updateUser(
       firstName: String
       lastName: String
       email: String
       password: String
     ): User
-    login(email: String!, password: String!): Auth
-    createGoal(description: String, active: Boolean, tally: Int, date_created: String, date_archived: String ) : Goal
-    updateGoal(id: ID!, description: String, active: Boolean, tally: Int, date_created: String, date_archived: String ) : Goal
-    deleteGoal(id: ID!) : Goal
-    createMetric(complete: Boolean, date: String) : Metric
-    updateMetric(id: ID!, complete: Boolean, date: String) : Metric
-    deleteMetric(id: ID!) : Metric
+    
+    login(email: String!, 
+      password: String!
+    ): Auth
+    
+    addGoal(
+      description: String, 
+      active: Boolean, 
+      tally: Int, 
+      date_created: String, 
+      date_archived: String 
+    ): Goal
+    
+    updateGoal(
+      id: ID!, 
+      description: String, 
+      active: Boolean, 
+      tally: Int, 
+      date_created: String, 
+      date_archived: String 
+    ): Goal
+    
+    deleteGoal(
+      id: ID!
+    ): Goal
+    
+    addMetric(
+      complete: Boolean, 
+      date: String
+    ): Metric
+    
+    updateMetric(
+      id: ID!, 
+      complete: Boolean, 
+      date: String
+    ): Metric
+    
+    deleteMetric(
+      id: ID!
+    ): Metric
   }
 `;
 
