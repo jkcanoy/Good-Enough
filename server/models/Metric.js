@@ -7,19 +7,11 @@ const metricSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  submission_date: {
+  date: {
     type: Date,
     required: true,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-  goal: {
-    type: Schema.Types.ObjectId,
-    ref: "Goal",
   },
 });
 
