@@ -31,11 +31,12 @@ const typeDefs = gql`
   }
 
   type Query {
-    user: User
-    goal(id: ID!): [Goal]
-    goals: [Goal]!
-    metric(id: ID!): [Metric]
-    metrics: [Metric]!
+    user(_id: ID!): User
+    users: [User]
+    goal(_id: ID!, active: active!): Goal
+    goals: [Goal]
+    metric(_id: ID!): Metric
+    metrics: [Metric]
   }
 
   type Mutation {
