@@ -6,6 +6,7 @@ const goalSchema = new Schema({
   active: {
     type: Boolean,
     required: true,
+    default: true,
   },
   tally: {
     type: Number,
@@ -20,18 +21,24 @@ const goalSchema = new Schema({
   },
   date_archived: {
     type: Date,
-    required: true,
-    default: Date.now,
+    required: false,
+    default: null,
     get: (timestamp) => dateFormat(timestamp),
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-  task: {
-    type: Schema.Types.ObjectId,
-    ref: "DefaultTask",
-  },
+  metrics: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Metric",
+    },
+  ],
+  // user: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "User",
+  // },
+  // task: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "DefaultTask",
+  // },
 });
 
 const Goal = mongoose.model("Goal", goalSchema);
