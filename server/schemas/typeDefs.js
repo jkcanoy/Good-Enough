@@ -33,7 +33,7 @@ const typeDefs = gql`
   type Query {
     user(_id: ID!): User
     users: [User]
-    goal(_id: ID!, active: active!): Goal
+    goal(_id: ID!): Goal
     goals: [Goal]
     metric(_id: ID!): Metric
     metrics: [Metric]
@@ -64,7 +64,7 @@ const typeDefs = gql`
       tally: Int, 
       date_created: String, 
       date_archived: String 
-    ): Goal
+    ): Goal!
     
     updateGoal(
       id: ID!, 
@@ -73,7 +73,7 @@ const typeDefs = gql`
       tally: Int, 
       date_created: String, 
       date_archived: String 
-    ): Goal
+    ): Goal!
     
     deleteGoal(
       id: ID!
@@ -82,13 +82,13 @@ const typeDefs = gql`
     addMetric(
       complete: Boolean, 
       date: String
-    ): Metric
+    ): Metric!
     
     updateMetric(
       id: ID!, 
       complete: Boolean, 
       date: String
-    ): Metric
+    ): Metric!
     
     deleteMetric(
       id: ID!
