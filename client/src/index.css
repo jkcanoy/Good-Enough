@@ -147,6 +147,7 @@ input:focus {
 .container {
   max-width: 540px !important;
   height: fit-content;
+  padding-top: .5em;
   padding-bottom: .5em;
   margin-left: auto;
   margin-right: auto;

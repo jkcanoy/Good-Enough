@@ -58,8 +58,8 @@ const Dashboard = () => {
                 <table>
                     <thead>
                         <tr>
-                        <th>Goal Description</th>
-                        <th>Current End Date</th>
+                        <th>Description</th>
+                        <th>End Date</th>
                         <th>Update</th>
                         <th>Archive</th>
                         <th>Remove</th>
@@ -70,7 +70,7 @@ const Dashboard = () => {
                         {goals.map((goal) => (
                         <tr key={goal.id}>
                             <td>
-                                <FormControl defaultValue={goal.description}></FormControl>
+                               {goal.description}
                             </td>
                             <td>
                                 <CalendarUpdate endDate={goal.endDate}/>
