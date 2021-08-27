@@ -18,6 +18,7 @@ const Home = () => {
         <br></br>
         <p style={style}>Taking the steps to becoming a better human on day at a time</p>
       </Jumbotron>
+      
     </div>
   );
 };
