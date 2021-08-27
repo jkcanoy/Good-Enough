@@ -16,7 +16,7 @@ export const QUERY_SINGLE_USER = gql`
         metrics {
           _id
           complete
-          submission_date
+          date
         }
       }
     }
@@ -39,7 +39,7 @@ query getUsers {
         metrics {
           _id
           complete
-          submission_date
+          date
         }
       }
     }
@@ -57,7 +57,7 @@ export const QUERY_SINGLE_GOAL = gql`
       metrics {
         _id
         complete
-        submission_date
+        date
       }
     }
   }
@@ -74,7 +74,7 @@ export const QUERY_GOALS = gql`
       metrics {
         _id
         complete
-        submission_date
+        date
       }
     }
   }
@@ -85,7 +85,7 @@ export const QUERY_SINGLE_METRIC = gql`
     metric(_id: $_id) {
       _id
       complete
-      submission_date
+      date
     }
   }
 `;
@@ -95,7 +95,7 @@ export const QUERY_METRICS = gql`
       metrics {
         _id
         complete
-        submission_date
+        date
       }
     }
 `;
