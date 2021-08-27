@@ -6,19 +6,17 @@ export const QUERY_SINGLE_USER = gql`
       _id
       firstName
       lastName
-      defaultTasks {
+      goals {
         _id
         description
-        goals {
+        active
+        tally
+        date_created
+        date_archived
+        metrics {
           _id
-          active
-          tally
-          date_created
-          date_archived
-          metrics {
-            _id
-            complete
-            submission_date
+          complete
+          submission_date
         }
       }
     }
@@ -31,32 +29,9 @@ query getUsers {
       _id
       firstName
       lastName
-      defaultTasks {
-        _id
-        description
-        goals {
-          _id
-          active
-          tally
-          date_created
-          date_archived
-          metrics {
-            _id
-            complete
-            submission_date
-        }
-      }
-    }
-  }
-`;
-
-export const QUERY_SINGLE_TASKS = gql`
-query getSingleTask($_id: ID!) {
-  defaultTasks(_id: $_id) {
-      _id
-      description
       goals {
         _id
+        description
         active
         tally
         date_created
@@ -65,27 +40,6 @@ query getSingleTask($_id: ID!) {
           _id
           complete
           submission_date
-      }
-    }
-  }
-}
-`;
-
-export const QUERY_TASKS = gql`
-query getTasks {
-      defaultTasks {
-        _id
-        description
-        goals {
-          _id
-          active
-          tally
-          date_created
-          date_archived
-          metrics {
-            _id
-            complete
-            submission_date
         }
       }
     }
