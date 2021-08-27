@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const goalSchema = new Schema({
+  description: {
+    type: String,
+    required: true,
+  },
   active: {
     type: Boolean,
     required: true,
