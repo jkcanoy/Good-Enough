@@ -23,7 +23,7 @@ db.once("open", async () => {
 
     // randomly add a metric to each goal
     const tempMetric = metrics[Math.floor(Math.random() * metrics.length)];
-    newGoal.metric = tempMetric._id;
+    newGoal.metrics.push(tempMetric._id);
     await newGoal.save();
 
   }
