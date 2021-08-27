@@ -1,9 +1,26 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User } = require("../models");
+const { User, Goal, Metric } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
+
+    goals: async () => {
+      return Goal.find().sort();
+    },
+
+    goal: async (parent, { _id }) => {
+      return Goal.findOne({ _id });
+    },
+
+    metrics: async () => {
+      return Metric.find().sort();
+    },
+
+    metric: async (parent, { _id }) => {
+      return Metric.findOne({ _id });
+    },
+
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
@@ -20,12 +37,37 @@ const resolvers = {
     },
   },
   Mutation: {
+    addGoal: async (parent, args) => {
+
+    },
+
+    updateGoal: async (parent, args) => {
+
+    },
+
+    deleteGoal: async (parent, args) => {
+
+    },
+
+    addMetric: async (parent, args) => {
+
+    },
+
+    updateMetric: async (parent, args) => {
+
+    },
+
+    deleteMetric: async (parent, args) => {
+
+    },
+
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
 
       return { token, user };
     },
+
     updateUser: async (parent, args, context) => {
       if (context.user) {
         return await User.findByIdAndUpdate(context.user._id, args, {
@@ -35,6 +77,7 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
