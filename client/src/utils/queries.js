@@ -47,8 +47,8 @@ query getUsers {
 `;
 
 export const QUERY_SINGLE_GOAL = gql`
-  query getSingleGoal($_id: ID!, $active: Boolean!) {
-    goal(_id: $_id, active: $true) {
+  query getSingleGoal($_id: ID!) {
+    goal(_id: $_id) {
       _id
       active
       tally
