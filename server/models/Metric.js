@@ -7,11 +7,6 @@ const metricSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  tally: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
   submission_date: {
     type: Date,
     required: true,

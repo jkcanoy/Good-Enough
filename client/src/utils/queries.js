@@ -3,18 +3,22 @@ import { gql } from "@apollo/client";
 export const QUERY_USER = gql`
   {
     user {
+      _id
       firstName
       lastName
-      orders {
+      defaultTasks {
         _id
-        purchaseDate
-        products {
+        description
+        goals {
           _id
-          name
-          description
-          price
-          quantity
-          image
+          active
+          tally
+          date_created
+          date_archived
+          metrics {
+            _id
+            complete
+            submission_date
         }
       }
     }
