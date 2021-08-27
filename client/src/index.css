@@ -1,12 +1,13 @@
 :root {
-  --primary: #232F3E;
-  --secondary: #F3A847;
-  --tertiary: #B12704;
-  --light: #fafafa;
-  --dark: #272f32;
+  --primary: #b4bbc5;
+  --secondary: #215a78;
+  --tertiary: #5292ab;
+  --light: #e0dee1;
+  --dark: #1f3850;
   --error: rgb(228, 46, 1);
   --spacing-one: calc(1rem * 0.5);
   --spacing-two: calc(1rem);
+  --spacing-three: calc(2rem);
 }
 
 * {
@@ -15,13 +16,13 @@
 
 html,
 body {
-  min-height: 100%;
+  height: 100vh;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Karla', sans-serif;
+  font-family: 'Roboto', sans-serif !important;
   font-weight: 400;
   line-height: 1.5;
   font-size: 16px;
@@ -34,10 +35,11 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
-  margin: 5px 0;
+  margin-top: .5rem !important;
   line-height: 1.25;
+  text-align: center;
 }
 
 h1 {
@@ -69,22 +71,26 @@ p {
   margin-top: 0;
 }
 
-a {
-  color: var(--tertiary);
-  text-decoration: none;
-  font-weight: bold;
-}
-
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  color: var(--tertiary) !important;
 }
 
 header {
-  background: var(--primary);
+  background: rgb(31,56,80);
+  background: linear-gradient(180deg, rgba(31,56,80,1) 0%, rgba(180,187,197,0.923406862745098) 46%, rgba(224,222,225,0.9178046218487395) 100%);
+  box-shadow: 0px 21px 37px 1px rgba(0,0,0,0.82);
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 6;
 }
 
-header a {
-  color: var(--light);
+a {
+  color: var(--secondary) !important;
+  text-decoration: none !important;
 }
 
 button {
@@ -103,6 +109,10 @@ button:hover {
   opacity: .8;
 }
 
+.submitButton {
+  width: 60%;
+}
+
 button[disabled] {
   cursor: default;
   opacity: .8;
@@ -117,7 +127,7 @@ span[role="img"] {
 }
 
 form {
-  width: 40%;
+  margin-bottom: 1em;
 }
 
 input {
@@ -135,10 +145,22 @@ input:focus {
 }
 
 .container {
-  width: 85%;
-  max-width: 1200px;
+  max-width: 540px !important;
+  height: fit-content;
+  padding-bottom: .5em;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 18vh;
+  background: rgb(224,222,225);
+  background: linear-gradient(180deg, rgba(224,222,225,.95) 100%, rgba(224,222,225,.95) 100%);
+  box-shadow: 0px 21px 37px 1px rgba(0,0,0,0.82);
+}
+
+.containerNBG {
+  max-width: 540px !important;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 18vh;
 }
 
 .flex-row {
@@ -152,6 +174,10 @@ input:focus {
 
 .flex-end {
   justify-content: flex-end;
+}
+
+.flex-center {
+  justify-content: center;
 }
 
 .mx-1 {
@@ -206,5 +232,23 @@ input:focus {
 @media screen and (max-width: 768px) {
   .card {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 450px;
+  }
+  .containerNBG {
+    width: 450px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .container {
+    width: 325px !important;
+  }
+  .containerNBG {
+    width: 325px !important;
   }
 }

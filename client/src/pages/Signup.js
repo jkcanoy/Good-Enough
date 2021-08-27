@@ -30,14 +30,25 @@ function Signup(props) {
     });
   };
 
+  const styleForm = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center !important',
+    justifyContent: 'center !important',
+    alignContent: 'center',
+    width: 'fit-content',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  }
+
   return (
-    <div className="container my-1">
+    <div className="container">
       <Link to="/login">← Go to Login</Link>
 
       <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} style={styleForm}>
         <div className="flex-row space-between my-2">
-          <label htmlFor="firstName">First Name:</label>
+          <label htmlFor="firstName" className="mx-2">First Name:</label>
           <input
             placeholder="First"
             name="firstName"
@@ -47,7 +58,7 @@ function Signup(props) {
           />
         </div>
         <div className="flex-row space-between my-2">
-          <label htmlFor="lastName">Last Name:</label>
+          <label htmlFor="lastName" className="mx-2">Last Name:</label>
           <input
             placeholder="Last"
             name="lastName"
@@ -57,7 +68,7 @@ function Signup(props) {
           />
         </div>
         <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email" className="mx-2">Email:</label>
           <input
             placeholder="youremail@test.com"
             name="email"
@@ -67,7 +78,7 @@ function Signup(props) {
           />
         </div>
         <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
+          <label htmlFor="pwd" className="mx-2">Password:</label>
           <input
             placeholder="******"
             name="password"
@@ -76,8 +87,8 @@ function Signup(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+        <div className="flex-row flex-center">
+          <button type="submit" className="submitButton">Submit</button>
         </div>
       </form>
     </div>

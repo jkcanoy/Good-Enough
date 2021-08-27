@@ -36,12 +36,24 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const style = {
+  backgroundImage: 'url(./backgroundImage.jpeg)',
+  width: '100%',
+  height: '100vh',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  position: 'fixed',
+  overflowY: 'scroll'
+}
+
+
 function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div>
-          <Nav />
+        <div style={style}>
+          <Nav/>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
