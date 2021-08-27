@@ -1,9 +1,9 @@
 import React from "react";
 import { Accordion, Form, Button, FormControl, Table  } from "react-bootstrap";
-import AnimatedRadar from "../components/Radar";
 import { CalendarNew, CalendarUpdate } from "../components/Calendar";
+import Metric from "../components/Metric/index";
 
-///for the radio button, need to change the 
+///for the radio button, need to change the checked value with state
 
 const Dashboard = () => {
 
@@ -28,7 +28,7 @@ const Dashboard = () => {
 
     return (
       <div className="container">
-        <Accordion defaultActiveKey="3">
+        <Accordion defaultActiveKey="2">
             <Accordion.Item eventKey="0">
                 <Accordion.Header>Create New Goals</Accordion.Header>
                     <Accordion.Body>
@@ -166,7 +166,7 @@ const Dashboard = () => {
             <Accordion.Item eventKey="3">
                 <Accordion.Header>Goal Metrics</Accordion.Header>
                 <Accordion.Body>
-                    <AnimatedRadar />
+                    <Metric />
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>
