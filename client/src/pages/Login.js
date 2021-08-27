@@ -29,14 +29,25 @@ function Login(props) {
     });
   };
 
+  const styleForm = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center !important',
+    justifyContent: 'center !important',
+    alignContent: 'center',
+    width: 'fit-content',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  }
+
   return (
-    <div className="container my-1">
+    <div className="container">
       <Link to="/signup">← Go to Signup</Link>
 
       <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} style={styleForm}>
         <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email address:</label>
+          <label htmlFor="email" className="mx-2">Email address:</label>
           <input
             placeholder="youremail@test.com"
             name="email"
@@ -46,7 +57,7 @@ function Login(props) {
           />
         </div>
         <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
+          <label htmlFor="pwd" className="mx-2">Password:</label>
           <input
             placeholder="******"
             name="password"
@@ -60,8 +71,8 @@ function Login(props) {
             <p className="error-text">The provided credentials are incorrect</p>
           </div>
         ) : null}
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+        <div className="flex-row flex-center">
+          <button type="submit" className="submitButton">Submit</button>
         </div>
       </form>
     </div>
