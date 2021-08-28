@@ -63,6 +63,7 @@ export const QUERY_SINGLE_GOAL = gql`
   }
 `;
 
+// Works for everything except date fields.
 export const QUERY_GOALS = gql`
   query getGoals {
     goals {
@@ -90,6 +91,7 @@ export const QUERY_SINGLE_METRIC = gql`
   }
 `;
 
+// Works for everything except date fields.
 export const QUERY_METRICS = gql`
   query getMetrics {
       metrics {
