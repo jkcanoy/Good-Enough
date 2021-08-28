@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+//CBW: As a rule, leaving _id and date_created off mutations as they are provided by MongoDB.
 
 export const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -33,33 +34,70 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_GOAL = gql`
-  mutation addGoal($description: String!, $active: Boolean!, $tally: Number!, $date_created: Date! $date_archived: Date) {
-    addGoal {
-      _id
-      description
-      active
-      tally
-      date_created
-    }
-  }
-`;
-
-export const UPDATE_GOAL = gql`
-  mutation updateGoal($description: String!, $active: Boolean!, $tally: Number!, $date_created: Date! $date_archived: Date) {
-    updateGoal {
+  mutation addGoal(
+    $active: Boolean!
+    $description: String!
+    $tally: Number!
+    $date_created: Date!
+    $date_archived: Date
+  ) {
+    addGoal(
+      active: $active
+      description: $description
+      tally: $tally
+    ) {
       _id
       active
       description
       tally
       date_created
       date_archived
+      metrics {
+        _id
+        complete
+        date
+      }
+    }
+  }
+`;
+
+export const UPDATE_GOAL = gql`
+  mutation updateGoal(
+    $active: Boolean!
+    $description: String!
+    $tally: Number!
+    $date_created: Date!
+    $date_archived: Date
+  ) {
+    updateGoal(
+      active: $active
+      tally: $tally
+      date_archived: $date_archived
+    ) {
+      _id
+      active
+      description
+      tally
+      date_created
+      date_archived
+      metrics {
+        _id
+        complete
+        date
+      }
     }
   }
 `;
 
 export const ADD_METRIC = gql`
-  mutation addMetric($complete: Boolean!, $date: Date!) {
-    addMetric {
+  mutation addMetric(
+    $complete: Boolean!
+    $date: Date!
+  ) {
+    addMetric(
+      complete: $complete
+      date: $date
+    ) {
       _id
       complete
       date
@@ -68,11 +106,17 @@ export const ADD_METRIC = gql`
 `;
 
 export const UPDATE_METRIC = gql`
-mutation updateMetric($complete: Boolean!, $date: Date!) {
-  addMetric {
-    _id
-    complete
-    date
+  mutation updateMetric(
+    $complete: Boolean!
+    $date: Date!
+  ) {
+    updateMetric(
+      complete: $complete
+      date: $date
+    ) {
+      _id
+      complete
+      date
+    }
   }
-}
 `;
