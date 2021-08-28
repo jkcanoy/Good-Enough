@@ -24,16 +24,29 @@ const resolvers = {
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: "orders.products",
-          populate: "category",
+          path: "goals.metrics",
+          // populate: "category",
         });
 
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+        user.goals.sort((a, b) => b.date_created - a.date_created);
 
         return user;
       }
 
       throw new AuthenticationError("Not logged in");
+    },
+
+    users: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.find().populate({
+          path: "goals.metrics",
+          // populate: "category",
+        });
+
+        // user.goals.sort((a, b) => b.date_created - a.date_created);
+
+        return user;
+      }
     },
   },
   Mutation: {
