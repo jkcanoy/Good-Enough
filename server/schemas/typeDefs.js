@@ -1,6 +1,8 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  scalar ISODate
+
   type User {
     _id: ID
     firstName: String
@@ -19,15 +21,15 @@ const typeDefs = gql`
     description: String
     active: Boolean
     tally: Int
-    date_created: String
-    date_archived: String
+    date_created: ISODate
+    date_archived: ISODate
     metrics: [Metric]
   }
 
   type Metric {
     _id: ID
     complete: Boolean
-    date: String
+    date: ISODate
   }
 
   type Query {
@@ -46,53 +48,40 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Auth
-    
+
     updateUser(
       firstName: String
       lastName: String
       email: String
       password: String
     ): User
-    
-    login(email: String!, 
-      password: String!
-    ): Auth
-    
+
+    login(email: String!, password: String!): Auth
+
     addGoal(
-      description: String, 
-      active: Boolean, 
-      tally: Int, 
-      date_created: String, 
-      date_archived: String 
+      description: String
+      active: Boolean
+      tally: Int
+      date_created: String
+      date_archived: String
     ): Goal!
-    
+
     updateGoal(
-      id: ID!, 
-      description: String, 
-      active: Boolean, 
-      tally: Int, 
-      date_created: String, 
-      date_archived: String 
+      id: ID!
+      description: String
+      active: Boolean
+      tally: Int
+      date_created: String
+      date_archived: String
     ): Goal!
-    
-    deleteGoal(
-      id: ID!
-    ): Goal
-    
-    addMetric(
-      complete: Boolean, 
-      date: String
-    ): Metric!
-    
-    updateMetric(
-      id: ID!, 
-      complete: Boolean, 
-      date: String
-    ): Metric!
-    
-    deleteMetric(
-      id: ID!
-    ): Metric
+
+    deleteGoal(id: ID!): Goal
+
+    addMetric(complete: Boolean, date: String): Metric!
+
+    updateMetric(id: ID!, complete: Boolean, date: String): Metric!
+
+    deleteMetric(id: ID!): Metric
   }
 `;
 
