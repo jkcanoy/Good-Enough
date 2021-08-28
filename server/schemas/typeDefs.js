@@ -29,7 +29,7 @@ const typeDefs = gql`
   type Metric {
     _id: ID
     complete: Boolean
-    date: String
+    date: ISODate
   }
 
   type Query {
