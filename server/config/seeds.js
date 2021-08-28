@@ -1,24 +1,32 @@
 const db = require("./connection");
-const { User } = require("../models");
+const { User, Goal, Metric } = require("../models");
+
+const userData = require('./userData.json');
+const goalData = require('./goalData.json');
+const metricData = require('./metricData.json');
 
 db.once("open", async () => {
-  await User.deleteMany();
+  await User.deleteMany({});
+  await Goal.deleteMany({});
+  await Metric.deleteMany({});
 
-  await User.create({
-    firstName: "Pamela",
-    lastName: "Washington",
-    email: "pamela@testmail.com",
-    password: "password12345",
-  });
+  const users = await User.insertMany(userData);
+  const goals = await Goal.insertMany(goalData);
+  const metrics = await Metric.insertMany(metricData);
 
-  await User.create({
-    firstName: "Elijah",
-    lastName: "Holt",
-    email: "eholt@testmail.com",
-    password: "password12345",
-  });
+  for (newGoal of goals) {
 
-  console.log("users seeded");
+    // randomly add a goal to each user
+    const tempUser = users[Math.floor(Math.random() * users.length)];
+    tempUser.goals.push(newGoal._id);
+    await tempUser.save();
 
+    // randomly add a metric to each goal
+    const tempMetric = metrics[Math.floor(Math.random() * metrics.length)];
+    newGoal.metrics.push(tempMetric._id);
+    await newGoal.save();
+
+  }
+  console.log('all done!')
   process.exit();
 });

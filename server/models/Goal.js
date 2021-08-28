@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const goalSchema = new Schema({
+  description: {
+    type: String,
+    required: true,
+  },
   active: {
     type: Boolean,
     required: true,
@@ -17,13 +21,13 @@ const goalSchema = new Schema({
     type: Date,
     required: true,
     default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
+    // get: (timestamp) => dateFormat(timestamp),
   },
   date_archived: {
     type: Date,
     required: false,
     default: null,
-    get: (timestamp) => dateFormat(timestamp),
+    // get: (timestamp) => dateFormat(timestamp),
   },
   metrics: [
     {
