@@ -1,8 +1,9 @@
 // Import our actions from our actions file
+import { useReducer } from 'react';
 import { ADD_GOAL, UPDATE_GOAL, ADD_METRIC, UPDATE_METRIC } from './actions';
 
 // Reducer accepts state and an action, returns a new state
-export default function reducer(state, action) {
+export const reducer = (state, action) => {
   switch (action.type) {
     case ADD_GOAL:
       return {
@@ -44,4 +45,8 @@ export default function reducer(state, action) {
     default:
       return state;
   }
+}
+
+export function useGoalReducer(initialState) {
+  return useReducer(reducer, initialState)
 }
