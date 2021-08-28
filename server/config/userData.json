@@ -1,0 +1,14 @@
+[
+     {
+          "firstName": "Boba",
+          "lastName": "Fett",
+          "email": "bf@starwars.com",
+          "password": "password"
+     },
+     {
+          "firstName": "Han",
+          "lastName": "Solo",
+          "email": "hs@starwars.com",
+          "password": "password"
+     }
+]

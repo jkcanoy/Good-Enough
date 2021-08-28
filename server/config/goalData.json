@@ -1,0 +1,17 @@
+[
+     {
+          "description": "Hydrate",
+          "active": true,
+          "tally": 5,
+          "date_created": "2021-08-01 22:17:56.151Z",
+          "date_archived": "2021-08-02 12:01:00.151Z" 
+     },
+     {
+          "description": "Take Vitamins",
+          "active": false,
+          "tally": 2,
+          "date_created": "2021-08-03 22:17:56.151Z",
+          "date_archived": "2021-08-04 12:01:00.151Z" 
+     }
+ ]
+

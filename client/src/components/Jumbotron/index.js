@@ -2,8 +2,8 @@ import React from "react";
 
 function Jumbotron({ children }) {
   return (
-    <div
-      style={{ height: 560, clear: "both", paddingTop: 120, textAlign: "center" }}
+    <div className="d-flex flex-column align-items-center" 
+      style={{ height: 400, clear: "both", textAlign: "center" }}
     >
       {children}
     </div>
