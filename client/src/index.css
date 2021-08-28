@@ -103,6 +103,7 @@ button {
   cursor: pointer;
   margin: 0 1px;
   background-color: var(--secondary);
+  color: var(--light);
 }
 
 button:hover {
@@ -147,7 +148,7 @@ input:focus {
 .container {
   max-width: 540px !important;
   height: fit-content;
-  padding-top: .5em;
+  padding-top: .15em;
   padding-bottom: .5em;
   margin-left: auto;
   margin-right: auto;
