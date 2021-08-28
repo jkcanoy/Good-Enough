@@ -38,8 +38,8 @@ export const ADD_GOAL = gql`
     $active: Boolean!
     $description: String!
     $tally: Int!
-    $date_created: Date!
-    $date_archived: Date
+    $date_created: String!
+    $date_archived: String
   ) {
     addGoal(
       active: $active
@@ -66,8 +66,8 @@ export const UPDATE_GOAL = gql`
     $active: Boolean!
     $description: String!
     $tally: Int!
-    $date_created: Date!
-    $date_archived: Date
+    $date_created: String!
+    $date_archived: String
   ) {
     updateGoal(
       active: $active
@@ -92,7 +92,7 @@ export const UPDATE_GOAL = gql`
 export const ADD_METRIC = gql`
   mutation addMetric(
     $complete: Boolean!
-    $date: Date!
+    $date: String!
   ) {
     addMetric(
       complete: $complete
@@ -108,7 +108,7 @@ export const ADD_METRIC = gql`
 export const UPDATE_METRIC = gql`
   mutation updateMetric(
     $complete: Boolean!
-    $date: Date!
+    $date: String!
   ) {
     updateMetric(
       complete: $complete

@@ -64,7 +64,7 @@ const typeDefs = gql`
       tally: Int
       date_created: String
       date_archived: String
-    ): Goal!
+    ): Goal
 
     updateGoal(
       id: ID!
@@ -73,7 +73,7 @@ const typeDefs = gql`
       tally: Int
       date_created: String
       date_archived: String
-    ): Goal!
+    ): Goal
 
     deleteGoal(id: ID!): Goal
 
