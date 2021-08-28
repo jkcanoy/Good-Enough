@@ -1,10 +1,10 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Goal, Metric } = require("../models");
 const { signToken } = require("../utils/auth");
+const { GraphQLDateTime } = require("graphql-iso-date");
 
 const resolvers = {
   Query: {
-
     goals: async () => {
       return Goal.find().sort();
     },
@@ -50,29 +50,17 @@ const resolvers = {
     },
   },
   Mutation: {
-    addGoal: async (parent, args) => {
+    addGoal: async (parent, args) => {},
 
-    },
+    updateGoal: async (parent, args) => {},
 
-    updateGoal: async (parent, args) => {
+    deleteGoal: async (parent, args) => {},
 
-    },
+    addMetric: async (parent, args) => {},
 
-    deleteGoal: async (parent, args) => {
+    updateMetric: async (parent, args) => {},
 
-    },
-
-    addMetric: async (parent, args) => {
-
-    },
-
-    updateMetric: async (parent, args) => {
-
-    },
-
-    deleteMetric: async (parent, args) => {
-
-    },
+    deleteMetric: async (parent, args) => {},
 
     addUser: async (parent, args) => {
       const user = await User.create(args);
@@ -109,6 +97,8 @@ const resolvers = {
       return { token, user };
     },
   },
+
+  ISODate: GraphQLDateTime,
 };
 
 module.exports = resolvers;
