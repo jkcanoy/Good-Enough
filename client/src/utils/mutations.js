@@ -37,7 +37,7 @@ export const ADD_GOAL = gql`
   mutation addGoal(
     $active: Boolean!
     $description: String!
-    $tally: Number!
+    $tally: Int!
     $date_created: Date!
     $date_archived: Date
   ) {
@@ -65,7 +65,7 @@ export const UPDATE_GOAL = gql`
   mutation updateGoal(
     $active: Boolean!
     $description: String!
-    $tally: Number!
+    $tally: Int!
     $date_created: Date!
     $date_archived: Date
   ) {
