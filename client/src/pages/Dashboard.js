@@ -1,11 +1,63 @@
-import React from "react";
-import { Accordion, Form, Button, FormControl, Table  } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Accordion, Form, Button, Table, Col, Row, Card, useAccordionButton } from "react-bootstrap";
 import { CalendarNew, CalendarUpdate } from "../components/Calendar";
 import Metric from "../components/Metric/index";
 
 ///for the radio button, need to change the checked value with state
 
 const Dashboard = () => {
+
+    const defaultGoals = [
+        {
+            id: 1,
+            description: "Drink water",
+        },  
+        {
+            id: 2,
+            description: "Go on a long walk",
+        }, 
+        {
+            id: 3,
+            description: "Engage more with friends",
+        }, 
+        {
+            id: 4,
+            description: "Connect with Loved Ones",
+        },
+        {
+            id: 5,
+            description: "Healthy eating",
+        },
+        {
+            id: 6,
+            description: "Do something fun",
+        }, 
+        {
+            id: 7,
+            description: "Do something creative",
+        },
+        {
+            id: 8,
+            description: "Take vitamins",
+        },
+        {
+            id: 9,
+            description: "Get outside",
+        },
+        {
+            id: 10,
+            description: "Take my meds",
+        },
+        {
+            id: 11,
+            description: "Learn something",
+        },
+        {
+            id: 12,
+            description: "Laugh",
+        },
+
+    ]
 
     const goals = [
         {
@@ -15,7 +67,7 @@ const Dashboard = () => {
         },  
         {
             id: 2,
-            description: "Go on more walks",
+            description: "Go on a long walk",
             endDate: "2021/8/30"
         }, 
         {
@@ -26,149 +78,209 @@ const Dashboard = () => {
 
     ]
 
+    const styleAccHeader = {
+        backgroundColor: '#215a78 !important',
+        width: '100%',
+        color: '#e0dee1'
+    }
+
+    const styleCard= {
+       background: '#fff',
+       width: '100%',
+    }
+
+    function ContextAwareToggle({ children, eventKey, callback }) {
+      
+        const decoratedOnClick = useAccordionButton(
+          eventKey,
+          () => callback && callback(eventKey),
+        );
+      
+        return (
+          <button
+            type="button"
+            style={styleAccHeader}
+            onClick={decoratedOnClick}
+          >
+            {children}
+          </button>
+        );
+      }
+
     return (
       <div className="container">
-        <Accordion defaultActiveKey="2">
-            <Accordion.Item eventKey="0">
-                <Accordion.Header>Create New Goals</Accordion.Header>
-                    <Accordion.Body>
-                        <Form>
-                            <Form.Select aria-label="">
-                                <option>Pick a goal from the list below</option>
+        <Accordion defaultActiveKey="0">
+            <Card style={styleCard}>
+                <Card.Header>
+                    <ContextAwareToggle eventKey="0">Goal Tracker</ContextAwareToggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                        <p>Enter status for goals for ENTER CURRENT DATE HERE</p>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Goal</th>
+                                    <th>Completed?</th>
+                                    <th>Save</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {goals.map((goal) => (
-                                <option value={goal.id}>{goal.description}</option>
+                                <tr key={goal.id}>
+                                    <td>
+                                    {goal.description}
+                                    </td>
+                                    <td>
+                                    <Form>
+                                        <div key={`inline-radio`} className="mb-3">
+                                        <Form.Check
+                                            inline
+                                            label="Yes"
+                                            name="group1"
+                                            type="radio"
+                                            id={`inline-radio-1`}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            checked
+                                            label="No"
+                                            name="group1"
+                                            type="radio"
+                                            id={`inline-radio-2`}
+                                        />
+                                        </div>
+                                    </Form>
+                                    </td>
+                                    <td>
+                                        <Button
+                                            type="button"
+                                            onClick={() => console.log("hello")}>
+                                            <span role="img" aria-label="close">
+                                            💾
+                                            </span>
+                                        </Button>
+                                    </td>
+                                </tr>
                                 ))}
-                            </Form.Select>
-                            <Form.Control
-                                type="color"
-                                id="exampleColorInput"
-                                defaultValue="#563d7c"
-                                title="Choose your color"
-                            />
-                            <CalendarNew/>
-                            <Button variant="primary" type="submit">
+                            </tbody>
+                        </Table>
+                </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+            <Card style={styleCard}>
+                <Card.Header>
+                    <ContextAwareToggle eventKey="1">Create New Goals</ContextAwareToggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="1">
+                    <Card.Body>
+                        <form>
+                            <Form.Group className="my-2">
+                                <Form.Label>Select a Goal:</Form.Label>
+                                <Form.Select aria-label="">
+                                    <option></option>
+                                    {defaultGoals.map((goal) => (
+                                    <option value={goal.id}>{goal.description}</option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+                            <Row>
+                                <Col xsm>
+                                    <Form.Group className="my-2">
+                                        <Form.Label>Select a Goal Color: </Form.Label>
+                                        <Form.Control
+                                            type="color"
+                                            id="exampleColorInput"
+                                            defaultValue="#563d7c"
+                                            title="Choose your color"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col xsm>
+                                    <Form.Group className="my-2">
+                                        <Form.Label>Select a Goal End Date: </Form.Label>
+                                        <CalendarNew/>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <button className="submitButton" type="submit">
                             Submit
-                            </Button>
-                        </Form>
-                    </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="1">
-                <Accordion.Header>Edit Existing Goals</Accordion.Header>
-                <Accordion.Body>
-                <table>
-                    <thead>
-                        <tr>
-                        <th>Goal Description</th>
-                        <th>Current End Date</th>
-                        <th>Update</th>
-                        <th>Archive</th>
-                        <th>Remove</th>
-                        </tr>
-                    </thead>
+                            </button>
+                        </form>
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+            <Card style={styleCard}>
+                <Card.Header>
+                    <ContextAwareToggle eventKey="2">Edit Existing Goals</ContextAwareToggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="2">
+                    <Card.Body>
+                        <Table>
+                            <thead>
+                                <tr>
+                                <th>Description</th>
+                                <th>End Date</th>
+                                <th>Update</th>
+                                <th>Archive</th>
+                                <th>Remove</th>
+                                </tr>
+                            </thead>
 
-                    <tbody>
-                        {goals.map((goal) => (
-                        <tr key={goal.id}>
-                            <td>
-                                <FormControl defaultValue={goal.description}></FormControl>
-                            </td>
-                            <td>
-                                <CalendarUpdate endDate={goal.endDate}/>
-                            </td>
+                            <tbody>
+                                {goals.map((goal) => (
+                                <tr key={goal.id}>
+                                    <td>
+                                    {goal.description}
+                                    </td>
+                                    <td>
+                                        <CalendarUpdate endDate={goal.endDate}/>
+                                    </td>
 
-                            <td>
-                                <Button
-                                    type="button"
-                                    onClick={() => console.log("hello")}>
-                                    <span role="img" aria-label="close">
-                                    📝
-                                    </span>
-                                </Button>
-                            </td>
-                            <td>
-                                <Button
-                                    type="button"
-                                    onClick={() => console.log("hello")}>
-                                    <span role="img" aria-label="close">
-                                    🦖
-                                    </span>
-                                </Button>
-                            </td>
-                            <td>
-                                <Button
-                                    type="button"
-                                    onClick={() => console.log("hello")}>
-                                    <span role="img" aria-label="close">
-                                    ✖️
-                                    </span>
-                                </Button>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                    </table>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="2">
-                <Accordion.Header>Goal Tracker</Accordion.Header>
-                <Accordion.Body>
-                <p>Enter status for goals for ENTER CURRENT DATE HERE</p>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Goal</th>
-                            <th>Completed?</th>
-                            <th>Save</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {goals.map((goal) => (
-                        <tr key={goal.id}>
-                            <td>
-                            {goal.description}
-                            </td>
-                            <td>
-                            <Form>
-                                <div key={`inline-radio`} className="mb-3">
-                                <Form.Check
-                                    inline
-                                    label="Yes"
-                                    name="group1"
-                                    type="radio"
-                                    id={`inline-radio-1`}
-                                />
-                                <Form.Check
-                                    inline
-                                    checked
-                                    label="No"
-                                    name="group1"
-                                    type="radio"
-                                    id={`inline-radio-2`}
-                                />
-                                </div>
-                            </Form>
-                            </td>
-                            <td>
-                                <Button
-                                    type="button"
-                                    onClick={() => console.log("hello")}>
-                                    <span role="img" aria-label="close">
-                                    💾
-                                    </span>
-                                </Button>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </Table>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="3">
-                <Accordion.Header>Goal Metrics</Accordion.Header>
-                <Accordion.Body>
-                    <Metric />
-                </Accordion.Body>
-            </Accordion.Item>
+                                    <td>
+                                        <Button
+                                            type="button"
+                                            onClick={() => console.log("hello")}>
+                                            <span role="img" aria-label="close">
+                                            📝
+                                            </span>
+                                        </Button>
+                                    </td>
+                                    <td>
+                                        <Button
+                                            type="button"
+                                            onClick={() => console.log("hello")}>
+                                            <span role="img" aria-label="close">
+                                            🦖
+                                            </span>
+                                        </Button>
+                                    </td>
+                                    <td>
+                                        <Button
+                                            type="button"
+                                            onClick={() => console.log("hello")}>
+                                            <span role="img" aria-label="close">
+                                            ✖️
+                                            </span>
+                                        </Button>
+                                    </td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+            <Card style={styleCard}>
+                <Card.Header>
+                    <ContextAwareToggle eventKey="3">Goal Metrics</ContextAwareToggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="3">
+                    <Card.Body>
+                        <Metric />
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
         </Accordion>
       </div>
     );

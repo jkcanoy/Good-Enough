@@ -16,7 +16,7 @@ const Home = () => {
       <Jumbotron>
         <h1 style={style}>Good Enuff</h1>
         <br></br>
-        <p style={style}>Taking the steps to becoming a better human on day at a time</p>
+        <p style={style}>Taking the steps to becoming a better human one day at a time</p>
       </Jumbotron>
       
     </div>
