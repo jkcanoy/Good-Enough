@@ -34,89 +34,95 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_GOAL = gql`
-  mutation addGoal(
-    $active: Boolean!
-    $description: String!
-    $tally: Int!
-    $date_created: String!
-    $date_archived: String
-  ) {
-    addGoal(
-      active: $active
-      description: $description
-      tally: $tally
-    ) {
-      _id
-      active
-      description
-      tally
-      date_created
-      date_archived
-      metrics {
+  mutation addGoal( $description: String!, $endDate: String) {
+    addGoal( description: $description, endDate: $endDate) 
+      {
         _id
-        complete
-        date
+        description
+        active
+        tally
+        date_created
+        date_archived
+        endDate
+        metrics {
+          _id
+          complete
+          date
+        }
       }
     }
-  }
-`;
-
-export const UPDATE_GOAL = gql`
-  mutation updateGoal(
-    $active: Boolean!
-    $description: String!
-    $tally: Int!
-    $date_created: String!
-    $date_archived: String
-  ) {
-    updateGoal(
-      active: $active
-      tally: $tally
-      date_archived: $date_archived
-    ) {
-      _id
-      active
-      description
-      tally
-      date_created
-      date_archived
-      metrics {
-        _id
-        complete
-        date
-      }
-    }
-  }
 `;
 
 export const ADD_METRIC = gql`
-  mutation addMetric(
-    $complete: Boolean!
-    $date: String!
-  ) {
-    addMetric(
-      complete: $complete
-      date: $date
-    ) {
+  mutation addMetric( $goalId: ID!, $complete: Boolean!) {
+    addMetric(goalId: $goalId, complete: $complete)
+    {
       _id
-      complete
-      date
+      active
+      description
+      tally
+      date_created
+      date_archived
+      endDate
+      metrics {
+        _id
+        complete
+        date
+      }
     }
   }
 `;
 
 export const UPDATE_METRIC = gql`
-  mutation updateMetric(
-    $complete: Boolean!
-    $date: String!
-  ) {
-    updateMetric(
-      complete: $complete
-      date: $date
-    ) {
+mutation updateMetric( $updatedMetric: metricInput!) {
+  updateMetric(updatedMetric: $updatedMetric) 
+  {
+    _id
+    firstName
+    lastName
+    email
+    goals {
       _id
-      complete
-      date
+      description
+      active
+      tally
+      date_created
+      date_archived
+      endDate
+      metrics {
+        _id
+        complete
+        date
+      }
+    }
+  }
+}
+`;
+
+
+
+
+export const UPDATE_GOAL = gql`
+mutation updateGoal( $updatedGoal: goalInput!) {
+  updateGoal(updatedGoal: $updatedGoal) 
+  {
+    _id
+    firstName
+    lastName
+    email
+    goals {
+      _id
+      description
+      active
+      tally
+      date_created
+      date_archived
+      endDate
+      metrics {
+        _id
+        complete
+        date
+      }
     }
   }
 `;

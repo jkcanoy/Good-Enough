@@ -45,7 +45,7 @@ function mapData(hoveredSection) {
   });
 }
 
-export default class Metric extends Component {
+export default class Graphs extends Component {
   state = {
     hoveredSection: false
   };
