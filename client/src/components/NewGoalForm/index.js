@@ -65,6 +65,12 @@ const NewGoalForm = () => {
 
     ]
 
+    const styleDatePicker = {
+        width: '65%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    }
+
     const [description, setDescription] = useState('');
 
     const [endDate, setEndDate] = useState( new Date() );
@@ -128,11 +134,10 @@ const NewGoalForm = () => {
                         </Form.Select>
                     </Form.Group>
                     <Row>
-                        <Col xsm>
-                            <Form.Group className="my-2">
+                        <Col sm>
+                            <Form.Group className="my-2" style={styleDatePicker}>
                                 <Form.Label>Select a Goal End Date: </Form.Label>
                                 <DatePicker
-                                    selected={endDate}
                                     onChange={(endDate) => setEndDate(endDate) }
                                     showDisabledMonthNavigation
                                     isClearable

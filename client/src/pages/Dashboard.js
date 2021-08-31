@@ -15,9 +15,13 @@ const Dashboard = () => {
         color: '#e0dee1'
     }
 
-    const styleCard= {
+    const styleCard = {
        background: '#fff',
        width: '100%',
+    }
+
+    const styleHeader = {
+        fontSize: '20px !important'
     }
 /// Accordian toggle ///
     function ContextAwareToggle({ children, eventKey, callback }) {
@@ -43,7 +47,8 @@ const Dashboard = () => {
             <Accordion defaultActiveKey="0">
                 <Card style={styleCard}>
                     <Card.Header>
-                        <ContextAwareToggle eventKey="0">Goal Tracker</ContextAwareToggle>
+                        <ContextAwareToggle eventKey="0">
+                            <h2>Goal Tracker</h2></ContextAwareToggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="0">
                         <Card.Body>
@@ -53,7 +58,7 @@ const Dashboard = () => {
                 </Card>
                 <Card style={styleCard}>
                     <Card.Header>
-                        <ContextAwareToggle eventKey="1">Create New Goals</ContextAwareToggle>
+                        <ContextAwareToggle eventKey="1"><h2>Create New Goals</h2></ContextAwareToggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="1">
                         <Card.Body>
@@ -63,7 +68,7 @@ const Dashboard = () => {
                 </Card>
                 <Card style={styleCard}>
                     <Card.Header>
-                        <ContextAwareToggle eventKey="2">Edit Existing Goals</ContextAwareToggle>
+                        <ContextAwareToggle eventKey="2"><h2>Edit Existing Goals</h2></ContextAwareToggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="2">
                         <Card.Body>
@@ -73,7 +78,7 @@ const Dashboard = () => {
                 </Card>
                 <Card style={styleCard}>
                     <Card.Header>
-                        <ContextAwareToggle eventKey="3">Goal Metrics</ContextAwareToggle>
+                        <ContextAwareToggle eventKey="3"><h2>Goal Metrics</h2></ContextAwareToggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="3">
                         <Card.Body>
