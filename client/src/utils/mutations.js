@@ -58,8 +58,8 @@ export const ADD_METRIC = gql`
     addMetric(goalId: $goalId, complete: $complete)
     {
       _id
-      active
       description
+      active
       tally
       date_created
       date_archived
@@ -125,4 +125,5 @@ mutation updateGoal( $updatedGoal: goalInput!) {
       }
     }
   }
+}
 `;

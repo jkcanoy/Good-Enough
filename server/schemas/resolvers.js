@@ -1,7 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Goal } = require("../models");
 const { signToken } = require("../utils/auth");
-const { GraphQLDateTime } = require("graphql-iso-date");
 
 const resolvers = {
   Query: {
@@ -96,8 +95,6 @@ const resolvers = {
 
 
   },
-
-  ISODate: GraphQLDateTime,
 };
 
 module.exports = resolvers;
