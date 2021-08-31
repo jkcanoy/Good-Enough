@@ -1,86 +1,34 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Goal, Metric } = require("../models");
+const { User, Goal } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-
-    goals: async () => {
-      return Goal.find().sort();
+    user: async (parent, {email}) => {
+        return User.findOne({email}).populate('goals');
     },
-
-    goal: async (parent, { _id }) => {
-      return Goal.findOne({ _id });
+    goals: async (parent, { _id }) => {
+      const params = _id ? { _id } : {};
+      return Goal.find(params).sort({ date_created: -1 });
     },
-
-    metrics: async () => {
-      return Metric.find().sort();
+    goal: async (parent, { goalId }) => {
+      return Goal.findOne({ _id: goalId });
     },
-
-    metric: async (parent, { _id }) => {
-      return Metric.findOne({ _id });
-    },
-
-    user: async (parent, args, context) => {
+    me: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: "goals.metrics",
-          // populate: "category",
-        });
-
-        user.goals.sort((a, b) => b.date_created - a.date_created);
-
-        return user;
+        return User.findOne({ _id: context.user._id }).populate('goals');
       }
-
-      throw new AuthenticationError("Not logged in");
-    },
-
-    users: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.find().populate({
-          path: "goals.metrics",
-          // populate: "category",
-        });
-
-        // user.goals.sort((a, b) => b.date_created - a.date_created);
-
-        return user;
-      }
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
+
   Mutation: {
-    addGoal: async (parent, args) => {
-
-    },
-
-    updateGoal: async (parent, args) => {
-
-    },
-
-    deleteGoal: async (parent, args) => {
-
-    },
-
-    addMetric: async (parent, args) => {
-
-    },
-
-    updateMetric: async (parent, args) => {
-
-    },
-
-    deleteMetric: async (parent, args) => {
-
-    },
-
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
 
       return { token, user };
     },
-
     updateUser: async (parent, args, context) => {
       if (context.user) {
         return await User.findByIdAndUpdate(context.user._id, args, {
@@ -90,7 +38,6 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
-
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -108,6 +55,45 @@ const resolvers = {
 
       return { token, user };
     },
+    addGoal: async (parent, { description, endDate }, context ) => {
+
+      if (context.user) {
+
+          const goal = await Goal.create ({
+            description,
+            endDate
+          });
+
+
+          await User.findByIdAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { goals: goal._id }},
+            );
+
+        return goal;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    addMetric: async (parent, { goalId, complete }, context ) => {
+      if (context.user) {
+        return Goal.findOneAndUpdate(
+          { _id: goalId },
+          {
+            $addToSet: {
+              metrics: { complete },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+    }
+    throw new AuthenticationError('You need to be logged in!');
+  },
+
+    
   },
 };
 

@@ -1,50 +1,53 @@
 const mongoose = require("mongoose");
+const dateFormat = require('../utils/dateFormat');
 
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 
 const goalSchema = new Schema({
-  description: {
-    type: String,
-    required: true,
-  },
-  active: {
-    type: Boolean,
-    required: true,
-    default: true,
-  },
-  tally: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  date_created: {
-    type: Date,
-    required: true,
-    default: Date.now,
-    // get: (timestamp) => dateFormat(timestamp),
-  },
-  date_archived: {
-    type: Date,
-    required: false,
-    default: null,
-    // get: (timestamp) => dateFormat(timestamp),
-  },
-  metrics: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Metric",
+    description: {
+      type: String,
+      required: true,
     },
-  ],
-  // user: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "User",
-  // },
-  // task: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "DefaultTask",
-  // },
+    active: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    tally: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    date_created: {
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => dateFormat(timestamp),
+    },
+    date_archived: {
+      type: Date,
+      required: false,
+      default: null,
+      get: (timestamp) => dateFormat(timestamp),
+    },
+    endDate: {
+      type: Date,
+      required: false,
+      get: (timestamp) => dateFormat(timestamp),
+    },
+    metrics: [
+      {
+        complete: {
+          type: Boolean,
+        },
+        date: {
+          type: Date,
+          default: Date.now,
+          get: (timestamp) => dateFormat(timestamp)
+        },
+      }
+    ],
 });
 
-const Goal = mongoose.model("Goal", goalSchema);
+const Goal = model('Goal', goalSchema);
 
 module.exports = Goal;
