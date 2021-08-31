@@ -7,6 +7,7 @@ import Auth from '../../utils/auth'
 import { ADD_GOAL } from '../../utils/mutations';
 import { QUERY_GOALS, QUERY_ME } from '../../utils/queries';
 import DatePicker from 'react-datepicker';
+import { ADD_TO_GOAL_ARR } from '../../utils/actions';
 
 const NewGoalForm = () => {
     const defaultGoals = [
