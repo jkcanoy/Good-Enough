@@ -1,27 +1,20 @@
+
 {
-  "name": "mern-server",
+  "name": "mern-tracking-app",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
-    "start": "node server.js",
-    "watch": "nodemon",
-    "seed": "node config/seeds.js"
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "apollo-server-express": "^2.12.0",
-    "bcrypt": "^5.0.0",
-    "express": "^4.17.1",
-    "graphql": "^15.5.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.9",
-    "qs": "^6.10.1",
-    "stripe": "^8.67.0"
-  },
   "devDependencies": {
-  "nodemon": "^2.0.2"
+    "concurrently": "^5.1.0"
   }
 }
