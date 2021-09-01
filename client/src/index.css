@@ -136,6 +136,11 @@ button[disabled] {
   opacity: .8;
 }
 
+#newMetric {
+  background-color: var(--dark);
+  color: var(--light);
+}
+
 img {
   max-width: 100%;
 }

@@ -165,6 +165,7 @@ const NewGoalForm = () => {
                             </div>
                             <div style={style}>
                                 <DropdownButton
+                                    title='꫱'
                                     style={style}
                                     drop='start'
                                     id="dropdown"
