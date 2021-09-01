@@ -18,6 +18,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    match: [/.+@.+\..+/, 'Must use a valid email address'],
   },
   password: {
     type: String,
@@ -27,10 +28,11 @@ const userSchema = new Schema({
   goals: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Goal",
+      ref: 'Goal',
     },
-  ],
-});
+  ]
+}
+);
 
 // set up pre-save middleware to create password
 userSchema.pre("save", async function (next) {

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const dateFormat = require('../utils/dateFormat');
 
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 
 const goalSchema = new Schema({
   description: {
@@ -9,17 +10,16 @@ const goalSchema = new Schema({
   },
   active: {
     type: Boolean,
-    required: true,
+    required: false,
     default: true,
   },
   tally: {
     type: Number,
-    required: true,
+    required: false,
     default: 0,
   },
   date_created: {
     type: Date,
-    required: true,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
@@ -29,22 +29,25 @@ const goalSchema = new Schema({
     default: null,
     get: (timestamp) => dateFormat(timestamp),
   },
+  endDate: {
+    type: Date,
+    required: false,
+    get: (timestamp) => dateFormat(timestamp),
+  },
   metrics: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Metric",
-    },
+      complete: {
+        type: Boolean,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+        get: (timestamp) => dateFormat(timestamp)
+      },
+    }
   ],
-  // user: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "User",
-  // },
-  // task: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "DefaultTask",
-  // },
 });
 
-const Goal = mongoose.model("Goal", goalSchema);
+const Goal = model('Goal', goalSchema);
 
 module.exports = Goal;

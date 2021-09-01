@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+//CBW: As a rule, leaving _id and date_created off mutations as they are provided by MongoDB.
 
 export const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -33,46 +34,82 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_GOAL = gql`
-  mutation addGoal($description: String!, $active: Boolean!, $tally: Number!, $date_created: Date! $date_archived: Date) {
-    addGoal {
-      _id
-      description
-      active
-      tally
-      date_created
+  mutation addGoal( $description: String!, $endDate: String) {
+    addGoal( description: $description, endDate: $endDate) 
+      {
+        _id
+        description
+        active
+        tally
+        date_created
+        date_archived
+        endDate
+        metrics {
+          _id
+          complete
+          date
+        }
+      }
     }
-  }
-`;
-
-export const UPDATE_GOAL = gql`
-  mutation updateGoal($description: String!, $active: Boolean!, $tally: Number!, $date_created: Date! $date_archived: Date) {
-    updateGoal {
-      _id
-      active
-      description
-      tally
-      date_created
-      date_archived
-    }
-  }
 `;
 
 export const ADD_METRIC = gql`
-  mutation addMetric($complete: Boolean!, $date: Date!) {
-    addMetric {
+  mutation addMetric( $goalId: ID!, $complete: Boolean!) {
+    addMetric(goalId: $goalId, complete: $complete)
+    {
       _id
-      complete
-      date
+      description
+      active
+      tally
+      date_created
+      date_archived
+      endDate
+      metrics {
+        _id
+        complete
+        date
+      }
     }
   }
 `;
 
 export const UPDATE_METRIC = gql`
-mutation updateMetric($complete: Boolean!, $date: Date!) {
-  addMetric {
+mutation updateMetric( $updatedMetric: metricInput!) {
+  updateMetric(updatedMetric: $updatedMetric) 
+  {
     _id
-    complete
-    date
+    firstName
+    lastName
+    email
+    goals {
+      _id
+      description
+      active
+      tally
+      date_created
+      date_archived
+      endDate
+      metrics {
+        _id
+        complete
+        date
+      }
+    }
+  }
+}
+`;
+
+export const UPDATE_GOAL = gql`
+mutation updateGoal( $endDate: String!, $_id: ID!) {
+  updateGoal(endDate: $endDate, _id: $_id) 
+  {
+    _id: ID
+    description: String
+    active: Boolean
+    tally: Int
+    date_created: String
+    date_archived: String
+    endDate: String
   }
 }
 `;

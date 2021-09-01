@@ -1,175 +1,109 @@
-import React from "react";
-import { Accordion, Form, Button, FormControl, Table  } from "react-bootstrap";
-import { CalendarNew, CalendarUpdate } from "../components/Calendar";
-import Metric from "../components/Metric/index";
-
-///for the radio button, need to change the checked value with state
+import React, { useState } from "react";
+import { Accordion, Card, useAccordionButton, } from "react-bootstrap";
+import { useQuery } from '@apollo/client';
+import { useParams } from 'react-router-dom';
+import Auth from '../utils/auth';
+import AddMetricForm from "../components/AddMetricForm";
+import EditGoalForm from "../components/EditGoalForm";
+import NewGoalForm from '../components/NewGoalForm'
+import Graphs from "../components/Graphs/index";
+import { QUERY_USER, QUERY_ME } from '../utils/queries'
 
 const Dashboard = () => {
 
-    const goals = [
-        {
-            id: 1,
-            description: "Drink more water",
-            endDate: '2021/09/20'
-        },  
-        {
-            id: 2,
-            description: "Go on more walks",
-            endDate: "2021/8/30"
-        }, 
-        {
-            id: 3,
-            description: "Engage more with friends",
-            endDate: "2021/12/25"
-        }, 
+/// styling ///
+    const styleAccHeader = {
+        backgroundColor: '#215a78 !important',
+        width: '100%',
+        color: '#e0dee1'
+    }
 
-    ]
+    const styleCard = {
+       background: '#fff',
+       width: '100%',
+    }
+
+    const styleHeader = {
+        fontSize: '20px !important'
+    }
+
+/// Get user data ///
+    // const { email: userParam } = useParams();
+
+    // const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+    //   variables: { email: userParam},
+    // });
+  
+    // const user = data?.me || data?.user || {};
+
+    // const numberGoals = user.goals.length;
+    // console.log(numberGoals)
+
+
+/// Accordian toggle ///
+    function ContextAwareToggle({ children, eventKey, callback }) {
+      
+        const decoratedOnClick = useAccordionButton(
+          eventKey,
+          () => callback && callback(eventKey),
+        );
+      
+        return (
+          <button
+            type="button"
+            style={styleAccHeader}
+            onClick={decoratedOnClick}
+          >
+            {children}
+          </button>
+        );
+    }
 
     return (
       <div className="container">
-        <Accordion defaultActiveKey="2">
-            <Accordion.Item eventKey="0">
-                <Accordion.Header>Create New Goals</Accordion.Header>
-                    <Accordion.Body>
-                        <Form>
-                            <Form.Select aria-label="">
-                                <option>Pick a goal from the list below</option>
-                                {goals.map((goal) => (
-                                <option value={goal.id}>{goal.description}</option>
-                                ))}
-                            </Form.Select>
-                            <Form.Control
-                                type="color"
-                                id="exampleColorInput"
-                                defaultValue="#563d7c"
-                                title="Choose your color"
-                            />
-                            <CalendarNew/>
-                            <Button variant="primary" type="submit">
-                            Submit
-                            </Button>
-                        </Form>
-                    </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="1">
-                <Accordion.Header>Edit Existing Goals</Accordion.Header>
-                <Accordion.Body>
-                <table>
-                    <thead>
-                        <tr>
-                        <th>Goal Description</th>
-                        <th>Current End Date</th>
-                        <th>Update</th>
-                        <th>Archive</th>
-                        <th>Remove</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {goals.map((goal) => (
-                        <tr key={goal.id}>
-                            <td>
-                                <FormControl defaultValue={goal.description}></FormControl>
-                            </td>
-                            <td>
-                                <CalendarUpdate endDate={goal.endDate}/>
-                            </td>
-
-                            <td>
-                                <Button
-                                    type="button"
-                                    onClick={() => console.log("hello")}>
-                                    <span role="img" aria-label="close">
-                                    📝
-                                    </span>
-                                </Button>
-                            </td>
-                            <td>
-                                <Button
-                                    type="button"
-                                    onClick={() => console.log("hello")}>
-                                    <span role="img" aria-label="close">
-                                    🦖
-                                    </span>
-                                </Button>
-                            </td>
-                            <td>
-                                <Button
-                                    type="button"
-                                    onClick={() => console.log("hello")}>
-                                    <span role="img" aria-label="close">
-                                    ✖️
-                                    </span>
-                                </Button>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                    </table>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="2">
-                <Accordion.Header>Goal Tracker</Accordion.Header>
-                <Accordion.Body>
-                <p>Enter status for goals for ENTER CURRENT DATE HERE</p>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Goal</th>
-                            <th>Completed?</th>
-                            <th>Save</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {goals.map((goal) => (
-                        <tr key={goal.id}>
-                            <td>
-                            {goal.description}
-                            </td>
-                            <td>
-                            <Form>
-                                <div key={`inline-radio`} className="mb-3">
-                                <Form.Check
-                                    inline
-                                    label="Yes"
-                                    name="group1"
-                                    type="radio"
-                                    id={`inline-radio-1`}
-                                />
-                                <Form.Check
-                                    inline
-                                    checked
-                                    label="No"
-                                    name="group1"
-                                    type="radio"
-                                    id={`inline-radio-2`}
-                                />
-                                </div>
-                            </Form>
-                            </td>
-                            <td>
-                                <Button
-                                    type="button"
-                                    onClick={() => console.log("hello")}>
-                                    <span role="img" aria-label="close">
-                                    💾
-                                    </span>
-                                </Button>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </Table>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="3">
-                <Accordion.Header>Goal Metrics</Accordion.Header>
-                <Accordion.Body>
-                    <Metric />
-                </Accordion.Body>
-            </Accordion.Item>
-        </Accordion>
+            <Accordion defaultActiveKey='0'>
+                <Card style={styleCard}>
+                    <Card.Header>
+                        <ContextAwareToggle eventKey="0">
+                            <h2>Goal Tracker</h2></ContextAwareToggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="0">
+                        <Card.Body>
+                            <AddMetricForm />
+                    </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+                <Card style={styleCard}>
+                    <Card.Header>
+                        <ContextAwareToggle eventKey="1"><h2>Create New Goals</h2></ContextAwareToggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="1">
+                        <Card.Body>
+                            <NewGoalForm />
+                        </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+                <Card style={styleCard}>
+                    <Card.Header>
+                        <ContextAwareToggle eventKey="2"><h2>Edit Existing Goals</h2></ContextAwareToggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="2">
+                        <Card.Body>
+                            <EditGoalForm />
+                        </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+                <Card style={styleCard}>
+                    <Card.Header>
+                        <ContextAwareToggle eventKey="3"><h2>Goal Metrics</h2></ContextAwareToggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="3">
+                        <Card.Body>
+                            <Graphs />
+                        </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion>
       </div>
     );
   };
