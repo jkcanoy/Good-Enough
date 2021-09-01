@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Accordion, Card, useAccordionButton, } from "react-bootstrap";
+import { useQuery } from '@apollo/client';
+import { useParams } from 'react-router-dom';
 import Auth from '../utils/auth';
 import AddMetricForm from "../components/AddMetricForm";
 import EditGoalForm from "../components/EditGoalForm";
 import NewGoalForm from '../components/NewGoalForm'
 import Graphs from "../components/Graphs/index";
+import { QUERY_USER, QUERY_ME } from '../utils/queries'
 
 const Dashboard = () => {
 
@@ -23,6 +26,20 @@ const Dashboard = () => {
     const styleHeader = {
         fontSize: '20px !important'
     }
+
+/// Get user data ///
+    // const { email: userParam } = useParams();
+
+    // const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+    //   variables: { email: userParam},
+    // });
+  
+    // const user = data?.me || data?.user || {};
+
+    // const numberGoals = user.goals.length;
+    // console.log(numberGoals)
+
+
 /// Accordian toggle ///
     function ContextAwareToggle({ children, eventKey, callback }) {
       
@@ -44,7 +61,7 @@ const Dashboard = () => {
 
     return (
       <div className="container">
-            <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey='0'>
                 <Card style={styleCard}>
                     <Card.Header>
                         <ContextAwareToggle eventKey="0">
