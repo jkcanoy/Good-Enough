@@ -56,8 +56,10 @@ type Mutation {
     email: String!
     password: String!
   ): Auth
+  
   addGoal(description: String!, endDate: String): Goal
   addMetric(goalId: ID!, complete: Boolean!): Goal
+  updateGoal(endDate: String!, _id: ID!) : Goal
 }
 `;
 

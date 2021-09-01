@@ -55,10 +55,31 @@ const resolvers = {
 
       return { token, user };
     },
+
+    updateGoal: async (parent, { _id, endDate }, context) => {
+
+      if (context.user) {
+        // Might need to change endDate to a date here
+        const goal = await Goal.findByIdAndUpdate(_id, {
+          endDate
+        });
+
+        // await User.findByIdAndUpdate(
+        //   { _id: context.user._id },
+        //   { $addToSet: { goals: goal._id } },
+        // );
+
+        return goal;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+
+
+
     addGoal: async (parent, { description, endDate }, context) => {
 
       if (context.user) {
-
         const goal = await Goal.create({
           description,
           endDate
