@@ -110,6 +110,19 @@ button {
   color: var(--light);
 }
 
+#dropdown {
+  font-size: 1rem;
+  text-decoration: none;
+  padding: 0.25rem .5rem;
+  border-radius: .25rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin: 0 1px;
+  background-color: var(--secondary);
+  color: var(--light);
+}
+
 button:hover {
   opacity: .8;
 }

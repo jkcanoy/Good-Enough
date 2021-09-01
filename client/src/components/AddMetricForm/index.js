@@ -46,7 +46,7 @@ const AddMetricForm = () => {
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
-        console.log("ID: " + goalId + " complete " + complete )
+        // console.log("ID: " + goalId + " complete " + complete )
 
         try {
             const { data } = await addMetric({

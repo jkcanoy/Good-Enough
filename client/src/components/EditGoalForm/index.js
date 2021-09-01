@@ -86,9 +86,9 @@ const EditGoalForm = () => {
     const handleGoalUpdate = async (_id, event, endDate) => {
         event.preventDefault();
 
-        console.log(endDate);
-        console.log("endDate: " + endDate.toISOString());
-        console.log(_id);
+        // console.log(endDate);
+        // console.log("endDate: " + endDate.toISOString());
+        // console.log(_id);
     
     
         //   try {
@@ -107,17 +107,17 @@ const EditGoalForm = () => {
     const UpdateDateFormItem = (props) => {
 
         const goal = props.goal;
-        console.log(goal);
+        // console.log(goal);
         const [endDate, setEndDate] = useState(null);
     
         return (
-            <Form style={style} className="row" key={goal._id} onSubmit={(event) => handleGoalUpdate(goal._id, event, endDate)} dateselected={endDate}>
+            <Form style={style} className="row" onSubmit={(event) => handleGoalUpdate(goal._id, event, endDate)} dateselected={endDate}>
                 <Col style={styleColumn1}>
-                    <Row>{goal.description}</Row>
-                    <Row>{goal.endDate}</Row>
+                    <Row >{goal.description}</Row>
+                    <Row >{goal.endDate}</Row>
                 </Col>
                 <Col style={styleColumn2}>
-                    <Row>
+                    <Row >
                         <DatePicker
                             selected={endDate}
                             onChange={(endDate) => setEndDate(endDate)}
@@ -158,7 +158,7 @@ const EditGoalForm = () => {
             <Col style={styleColumn3}></Col>
         </Row>
             {user.goals.map((goal) => (
-               <UpdateDateFormItem goal={goal} />
+               <UpdateDateFormItem goal={goal} key={goal._id} />
             ))}
     </>
     )
