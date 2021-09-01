@@ -1,9 +1,10 @@
-import React, { useState }from "react";
+import React, { useState } from "react";
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { Form, Col, Card, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { QUERY_USER, QUERY_ME } from '../../utils/queries';
+import { UPDATE_GOAL } from "../../utils/mutations";
 import moment from 'moment';
 
 
@@ -61,13 +62,14 @@ const EditGoalForm = () => {
     }
 
     const { email: userParam } = useParams();
-
     const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-      variables: { email: userParam},
+      variables: { email: userParam },
     });
-  
     const user = data?.me || data?.user || {};
 
+    
+    const [updateGoal, { error, updData }] = useMutation(UPDATE_GOAL);
+    
     if (loading) {
         return <div>Loading...</div>;
       }
@@ -81,9 +83,31 @@ const EditGoalForm = () => {
     );
     }
 
+    const handleGoalUpdate = async (_id, event, endDate) => {
+        event.preventDefault();
+
+        console.log(endDate);
+        console.log("endDate: " + endDate.toISOString());
+        console.log(_id);
+    
+    
+        //   try {
+        //     const { updData } = await updateGoal({
+        //       variables: {
+    
+        //         endDate,
+        //       },
+        //     });
+        //     //setEndDate(endDate.toISOString());
+        //   } catch (err) {
+        //     console.log(err);
+        //   }
+    };
+
     const UpdateDateFormItem = (props) => {
 
         const goal = props.goal;
+        console.log(goal);
         const [endDate, setEndDate] = useState(null);
     
         return (
@@ -120,42 +144,8 @@ const EditGoalForm = () => {
                 </Col>
             </Form>
         );
-    }
+        }
 
-    const handleGoalUpdate = async (_id, event, endDate) => {
-        event.preventDefault();
-
-        // console.log("ID: " + goalIdUpdate + " complete " + endDate )
-
-        // try {
-        //     const { data } = await addMetric({
-        //         variables: {
-        //             goalId,
-        //             complete,
-        //         }
-        //     })
-            
-        // } catch (err) {
-        //     console.log(err);
-        // }
-    };
-
-  const { email: userParam } = useParams();
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-    variables: { email: userParam },
-  });
-  const user = data?.me || data?.user || {};
-
-  //const [endDate, setEndDate] = useState(null);
-
-
-  const [updateGoal, { error, updData }] = useMutation(UPDATE_GOAL);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user?.email) {
     return (
         <>
         <Row style={style2}>

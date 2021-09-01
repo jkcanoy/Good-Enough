@@ -40,7 +40,7 @@ export const QUERY_GOALS = gql`
   }
 `;
 
-export const QUERY_SINGLE_THOUGHT = gql`
+export const QUERY_SINGLE_GOAL = gql`
   query getSingleGoal($goalId: ID!) {
     goal(goalId: $goalId) {
       _id
