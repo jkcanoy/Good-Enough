@@ -122,7 +122,7 @@ const EditGoalForm = () => {
         );
     }
 
-    const handleGoalUpdate = async (event) => {
+    const handleGoalUpdate = async (_id, event, endDate) => {
         event.preventDefault();
 
         // console.log("ID: " + goalIdUpdate + " complete " + endDate )
@@ -140,6 +140,22 @@ const EditGoalForm = () => {
         // }
     };
 
+  const { email: userParam } = useParams();
+  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+    variables: { email: userParam },
+  });
+  const user = data?.me || data?.user || {};
+
+  //const [endDate, setEndDate] = useState(null);
+
+
+  const [updateGoal, { error, updData }] = useMutation(UPDATE_GOAL);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user?.email) {
     return (
         <>
         <Row style={style2}>

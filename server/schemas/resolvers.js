@@ -4,8 +4,8 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    user: async (parent, {email}) => {
-        return User.findOne({email}).populate('goals');
+    user: async (parent, { email }) => {
+      return User.findOne({ email }).populate('goals');
     },
     goals: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
@@ -55,27 +55,48 @@ const resolvers = {
 
       return { token, user };
     },
-    addGoal: async (parent, { description, endDate }, context ) => {
+
+    updateGoal: async (parent, { _id, endDate }, context) => {
 
       if (context.user) {
+        // Might need to change endDate to a date here
+        const goal = await Goal.findByIdAndUpdate(_id, {
+          endDate
+        });
 
-          const goal = await Goal.create ({
-            description,
-            endDate
-          });
-
-
-          await User.findByIdAndUpdate(
-            { _id: context.user._id },
-            { $addToSet: { goals: goal._id }},
-            );
+        // await User.findByIdAndUpdate(
+        //   { _id: context.user._id },
+        //   { $addToSet: { goals: goal._id } },
+        // );
 
         return goal;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    addMetric: async (parent, { goalId, complete }, context ) => {
+
+
+
+    addGoal: async (parent, { description, endDate }, context) => {
+
+      if (context.user) {
+        const goal = await Goal.create({
+          description,
+          endDate
+        });
+
+
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { goals: goal._id } },
+        );
+
+        return goal;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    addMetric: async (parent, { goalId, complete }, context) => {
       if (context.user) {
         return Goal.findOneAndUpdate(
           { _id: goalId },
@@ -89,11 +110,11 @@ const resolvers = {
             runValidators: true,
           }
         );
-    }
-    throw new AuthenticationError('You need to be logged in!');
-  },
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
 
-    
+
   },
 };
 
