@@ -24,6 +24,15 @@ Our motivation behind this project was to create an app that would allow users t
 
 ## Core Objectives Met
 
+- When a user views the homepage, they will find a site description and buttons to login in or sign up and create an account.
+- When a user attempts to sign in or create an account, they can sign in or create a password-protected account
+- When a user views the user's dashboard in a logged-in state, they see a list of all the goals they are tracking.
+- When a user views the user's dashboard in a logged-out state, they are asked to login.
+- When a user is views any page in a logged-in or logged-out state, the footer presents an 'affirmation' that changes on page refresh.
+- When a user views the 'Goal Tracker' accordian, they are able to check off whether a goal has been completed for the day, and submit to update the goal's metrics.
+- When a user clicks on the 'Create New Goals' button, the accordian drops down and users are then able to choose a goal from a dropdown, select a date through a calendar modal, and submit to create a new goal.
+- When a user clicks on the 'Edit Existing Goals' button, the accordian drops down, users are able to view their existing goals and end dates, and update those end dates or end the goal.
+
 ## Technologies
 
 - React
@@ -35,7 +44,6 @@ Our motivation behind this project was to create an app that would allow users t
 - Mongoose
 - bcrypt
 - GraphQL
-- Bootstrap
 - React-Vis
 - JSONwebtoken
 - React-Datepicker
