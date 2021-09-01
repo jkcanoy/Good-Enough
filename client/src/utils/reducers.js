@@ -1,16 +1,21 @@
 // Import our actions from our actions file
 import { useReducer } from 'react';
-import { ADD_GOAL, UPDATE_GOAL, ADD_METRIC, UPDATE_METRIC } from './actions';
+import { 
+  ADD_TO_GOAL_ARR,
+  UPDATE_GOAL_ARR,
+  ADD_TO_METRIC_ARR,
+  UPDATE_METRIC_ARR
+} from './actions';
 
 // Reducer accepts state and an action, returns a new state
 export const reducer = (state, action) => {
   switch (action.type) {
-    case ADD_GOAL:
+    case ADD_TO_GOAL_ARR:
       return {
         ...state,
         goals: [...state.goals, action.payload],
       }
-    case UPDATE_GOAL: {
+    case UPDATE_GOAL_ARR: {
       const goalIndex = state.goals.findIndex((goal) => goal.id === action.payload.id);
       const updatedGoal = {
         ...state.goals[goalIndex],
@@ -23,13 +28,13 @@ export const reducer = (state, action) => {
         goals: newGoalsList,
       };
     }
-    case ADD_METRIC: {
+    case ADD_TO_METRIC_ARR: {
       return {
         ...state,
         metrics: [...state.metrics, action.payload],
       }
     }
-    case UPDATE_METRIC: {
+    case UPDATE_METRIC_ARR: {
       const metricIndex = state.metrics.findIndex((metric) => metric.id === action.payload.id);
       const updatedMetric = {
         ...state.metrics[metricIndex],

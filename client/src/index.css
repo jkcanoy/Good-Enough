@@ -29,6 +29,10 @@ body {
   color: var(--dark);
 }
 
+div > input {
+  width: 112px;
+}
+
 h1,
 h2,
 h3,
@@ -96,7 +100,7 @@ a {
 button {
   font-size: 1rem;
   text-decoration: none;
-  padding: 0.25rem 1rem;
+  padding: 0.25rem .5rem;
   border-radius: .5rem;
   border: none;
   outline: none;
@@ -153,6 +157,7 @@ input:focus {
   margin-left: auto;
   margin-right: auto;
   margin-top: 18vh;
+  margin-bottom: 50px;
   background: rgb(224,222,225);
   background: linear-gradient(180deg, rgba(224,222,225,.95) 100%, rgba(224,222,225,.95) 100%);
   box-shadow: 0px 21px 37px 1px rgba(0,0,0,0.82);

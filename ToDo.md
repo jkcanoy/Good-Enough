@@ -1,0 +1,1 @@
+* NewGoalForm - after a goal is submitted, reset the form to have a blank goal description and current date showing.
