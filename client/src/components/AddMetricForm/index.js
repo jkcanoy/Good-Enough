@@ -13,6 +13,8 @@ const AddMetricForm = () => {
         margin: '.2em',
     }
 
+
+
     const { email: userParam } = useParams();
 
     const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
@@ -71,15 +73,13 @@ const AddMetricForm = () => {
                 <Card.Header className="row">
                     <Col>Goal</Col>
                     <Col>Completed Today?</Col>
-                    <Col></Col>
                 </Card.Header>
                     {user.goals.map((goal) => (
                         <Form key={goal._id} onSubmit={handleFormSubmit} className="row" style={style}>
                             <Col>
                             {goal.description}
                             </Col>
-                            <Col>
-                                <div key={`inline-radio`} className="mb-3">
+                            <Col key={`inline-radio`} className="mb-3">
                                 <Form.Check
                                     inline
                                     name={goal._id}
@@ -87,9 +87,6 @@ const AddMetricForm = () => {
                                     onChange={e => setGoalComplete(e.currentTarget.checked)}
                                     onClick={e => setGoalId(e.target.name)}
                                 />
-                                </div>
-                            </Col>
-                            <Col>
                                 <button type="submit">
                                     Save
                                 </button>

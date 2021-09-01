@@ -5,7 +5,6 @@ import { Form, Col, Row, Alert } from "react-bootstrap";
 // import CalendarNew from "../CalendarNew";
 import Auth from '../../utils/auth'
 import { ADD_GOAL } from '../../utils/mutations';
-import { QUERY_GOALS, QUERY_ME } from '../../utils/queries';
 import DatePicker from 'react-datepicker';
 import { ADD_TO_GOAL_ARR } from '../../utils/actions';
 
@@ -66,6 +65,12 @@ const NewGoalForm = () => {
 
     ]
 
+    const styleDatePicker = {
+        width: '65%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    }
+
     const [description, setDescription] = useState('');
 
     const [endDate, setEndDate] = useState( new Date() );
@@ -81,13 +86,15 @@ const NewGoalForm = () => {
     useEffect(() => {
       if (error) {
         setShowErrorAlert(true);
-      } else {
+      } else { 
         setShowErrorAlert(false);
       }
-    }, [error]);   
+    }, [error]);
 
+    
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+        console.log(endDate)
 
         try {
           const { data } = await addGoal({
@@ -96,13 +103,22 @@ const NewGoalForm = () => {
               endDate,
             },
           });
-
-        setDescription();
-        setEndDate(new Date());
-        setTimeout(NewGoalForm(), 5000);
         } catch (err) {
           console.log(err);
         }
+        setDescription('')
+        setEndDate(new Date())
+        console.log(endDate)
+        delaySetState2();
+    };
+
+    function delaySetState2() {
+        const timer = setTimeout(() => {
+            console.log("this should happen after  seconds");
+            window.location.reload()
+
+        }, 2000);
+        return() => clearTimeout(timer);
     };
 
     return (
@@ -129,8 +145,8 @@ const NewGoalForm = () => {
                         </Form.Select>
                     </Form.Group>
                     <Row>
-                        <Col xsm>
-                            <Form.Group className="my-2">
+                        <Col sm>
+                            <Form.Group className="my-2" style={styleDatePicker}>
                                 <Form.Label>Select a Goal End Date: </Form.Label>
                                 <DatePicker
                                     selected={endDate}
@@ -145,7 +161,7 @@ const NewGoalForm = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xsm>
+                        <Col sm>
                             <button className="submitButton" type="submit">
                             Submit
                             </button>
