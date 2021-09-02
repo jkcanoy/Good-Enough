@@ -10,10 +10,13 @@ import 'react-vis/dist/style.css';
 
 const RenderGraph = () => {
   const { email: userParam } = useParams();
-  const { loading, error, data } = useQuery(QUERY_GOALS, {
-    variables: { email: userParam }
+  const { loading, error, data } = useQuery(QUERY_ME, {
+    variables: { email: userParam },
   });
-  const goals = data?.goals || [];
+
+  const goals = data?.me.goals || [];
+
+  console.log(goals)
 
   let arr=[];
   let lengthArr=[];
