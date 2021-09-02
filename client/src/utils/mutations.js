@@ -42,7 +42,6 @@ export const ADD_GOAL = gql`
         active
         tally
         date_created
-        date_archived
         endDate
         metrics {
           _id
@@ -54,15 +53,14 @@ export const ADD_GOAL = gql`
 `;
 
 export const ADD_METRIC = gql`
-  mutation addMetric( $goalId: ID!, $complete: Boolean!) {
-    addMetric(goalId: $goalId, complete: $complete)
+  mutation addMetric( $goalId: ID!, $complete: Boolean!, $newTally: Int) {
+    addMetric(goalId: $goalId, complete: $complete, newTally: $newTally)
     {
       _id
       description
       active
       tally
       date_created
-      date_archived
       endDate
       metrics {
         _id
@@ -87,7 +85,6 @@ mutation updateMetric( $updatedMetric: metricInput!) {
       active
       tally
       date_created
-      date_archived
       endDate
       metrics {
         _id
@@ -100,16 +97,15 @@ mutation updateMetric( $updatedMetric: metricInput!) {
 `;
 
 export const UPDATE_GOAL = gql`
-mutation updateGoal( $endDate: String!, $_id: ID!) {
-  updateGoal(endDate: $endDate, _id: $_id) 
+mutation updateGoal( $endDate: String!, $goalId: ID!, $goalActive: Boolean) {
+  updateGoal(endDate: $endDate, goalId: $goalId, goalActive: $goalActive) 
   {
-    _id: ID
-    description: String
-    active: Boolean
-    tally: Int
-    date_created: String
-    date_archived: String
-    endDate: String
+    _id
+    description
+    active
+    tally
+    date_created
+    endDate
   }
 }
 `;

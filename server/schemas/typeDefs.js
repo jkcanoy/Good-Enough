@@ -16,7 +16,6 @@ type Goal {
   active: Boolean
   tally: Int
   date_created: String
-  date_archived: String
   endDate: String
   metrics: [Metric]
 }
@@ -58,8 +57,8 @@ type Mutation {
   ): Auth
   
   addGoal(description: String!, endDate: String): Goal
-  addMetric(goalId: ID!, complete: Boolean!): Goal
-  updateGoal(endDate: String!, _id: ID!) : Goal
+  addMetric(goalId: ID!, complete: Boolean!, newTally: Int): Goal
+  updateGoal(endDate: String!, goalId: ID!, goalActive: Boolean) : Goal
 }
 `;
 

@@ -27,19 +27,6 @@ const Dashboard = () => {
         fontSize: '20px !important'
     }
 
-/// Get user data ///
-    // const { email: userParam } = useParams();
-
-    // const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-    //   variables: { email: userParam},
-    // });
-  
-    // const user = data?.me || data?.user || {};
-
-    // const numberGoals = user.goals.length;
-    // console.log(numberGoals)
-
-
 /// Accordian toggle ///
     function ContextAwareToggle({ children, eventKey, callback }) {
       
