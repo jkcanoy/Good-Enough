@@ -60,8 +60,6 @@ const AddMetricForm = () => {
     useEffect(() => {
         if (error) {
           setShowErrorAlert(true);
-        } if (data) {
-          setShowErrorAlert(false);
         } else { 
           setShowErrorAlert(false);
         }
