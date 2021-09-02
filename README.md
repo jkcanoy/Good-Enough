@@ -29,9 +29,10 @@ Our motivation behind this project was to create an app that would allow users t
 - When a user views the user's dashboard in a logged-in state, they see a list of all the goals they are tracking.
 - When a user views the user's dashboard in a logged-out state, they are asked to login.
 - When a user is views any page in a logged-in or logged-out state, the footer presents an 'affirmation' that changes on page refresh.
-- When a user views the 'Goal Tracker' accordian, they are able to check off whether a goal has been completed for the day, and submit to update the goal's metrics.
+- When a user views the 'Goal Tracker' accordian, they are able to check off whether a goal has been completed for the day, and submit to update the goal's metrics, and increase the count under 'Comp. Entries.'
 - When a user clicks on the 'Create New Goals' button, the accordian drops down and users are then able to choose a goal from a dropdown, select a date through a calendar modal, and submit to create a new goal.
 - When a user clicks on the 'Edit Existing Goals' button, the accordian drops down, users are able to view their existing goals and end dates, and update those end dates or end the goal.
+- When a user clicks on the 'Goal Metrics' button, the accordian drops down and users are able to see a radial graph that visualizes how many times they have completed a goal.
 
 ## Technologies
 
@@ -65,6 +66,10 @@ Must have a connection in Robo-3T.
 5. Open graphql in `localhost:3001/graphql`.
 
 ## Demo
+
+The following gif shows the design and functionality of the application
+
+[A user can register on signup page, then can see their empty dashboard. They then add goals and choose end dates. The user can see their list of goals and check off if the goal has been completed for the day. They can also edit the end date and see a radial chart comparing each goal and number of completions](/client/public/GoodEnuff.gif)
 
 ## Deployed
 
