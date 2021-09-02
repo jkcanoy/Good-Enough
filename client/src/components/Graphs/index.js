@@ -1,71 +1,88 @@
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Col, Row } from "react-bootstrap";
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_USER, QUERY_ME, QUERY_GOALS } from '../../utils/queries';
 
-import {CircularGridLines, RadialChart} from 'react-vis';
+
+import {CircularGridLines, ContinuousSizeLegend, RadialChart,  DiscreteColorLegend} from 'react-vis';
 import 'react-vis/dist/style.css';
 
-const DATA = [
-  {
-    angle: 1,
-    id: 1,
-    radius: 10
-  },
-  {
-    angle: 2,
-    label: 'Super Custom label',
-    subLabel: 'With annotation',
-    id: 2,
-    radius: 20
-  },
-  {
-    angle: 5,
-    id: 3,
-    radius: 5,
-    label: 'Alt Label'
-  },
-  {
-    angle: 3,
-    id: 4,
-    radius: 14
-  },
-  {
-    angle: 5,
-    id: 5,
-    radius: 12,
-    subLabel: 'Sub Label only'
-  }
-];
-
-function mapData(hoveredSection) {
-  return DATA.map((row, index) => {
-    return {
-      ...row,
-      innerRadius: hoveredSection === index + 1 ? row.radius - 1 : null,
-      opacity: !hoveredSection || hoveredSection === index + 1 ? 1 : 0.6
-    };
+const RenderGraph = () => {
+  const { email: userParam } = useParams();
+  const { loading, error, data } = useQuery(QUERY_GOALS, {
+    variables: { email: userParam }
   });
-}
+  const goals = data?.goals || [];
 
-export default class Graphs extends Component {
-  state = {
-    hoveredSection: false
-  };
+  let arr=[];
+  let lengthArr=[];
 
-  render() {
-    const {hoveredSection} = this.state;
-    return (
-      <RadialChart
-        animation
-        showLabels
-        radiusDomain={[0, 20]}
-        data={mapData(hoveredSection)}
-        labelsAboveChildren
-        onValueMouseOver={row => this.setState({hoveredSection: row.id})}
-        onMouseLeave={() => this.setState({hoveredSection: false})}
-        width={600}
-        height={300}
-      >
-        <CircularGridLines tickTotal={20} rRange={[0, 150]} />
-      </RadialChart>
-    );
+  goals.forEach( (goal) => {
+    let i = 0
+    let length = Object.keys(goal.metrics).length
+    let label = goal.description
+
+    let dataPoint ={
+      angle: 1,
+      id: i, 
+      radius: length,
+      label: label
+    }
+    arr.push(dataPoint);
+    lengthArr.push(length);
+    i++
+    return arr
+  })
+
+  const style={
+    width: '40%'
   }
+
+  const maxRadius = Math.max.apply(Math, lengthArr) + 10
+
+  console.log(arr)
+  console.log(lengthArr)
+  console.log(typeof lengthArr[0])
+  console.log(maxRadius)
+  
+  const [ hoveredSection, setHoveredSection]= useState(false);
+  const [ graphRadius, setGraphRadius] = useState(maxRadius);
+
+  function mapData(hoveredSection) {
+    return arr.map((row, index) => {
+      return {
+        ...row,
+        innerRadius: hoveredSection === index + 1 ? row.radius - 1 : null,
+        opacity: !hoveredSection || hoveredSection === index + 1 ? 1 : 0.6
+      };
+    });
+  }
+
+  return (
+    <>
+    <Row>
+    <Col sm>  
+      <DiscreteColorLegend items={arr.map(d => d.label)} />
+    </Col>
+    <Col style={style}>
+      <RadialChart
+          animation
+          radiusDomain={[0, graphRadius]}
+          data={mapData(hoveredSection)}
+          labelsAboveChildren
+          onValueMouseOver={row => setHoveredSection(row.id)}
+          onMouseLeave={() => setHoveredSection(false)}
+          width={200}
+          height={200}
+        >
+          <CircularGridLines tickTotal={maxRadius} rRange={[0, 150]} />
+      </RadialChart>
+      </Col>
+      </Row>
+    </>
+  )
 }
+
+export default RenderGraph;
+

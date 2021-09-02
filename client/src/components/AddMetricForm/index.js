@@ -1,8 +1,8 @@
-import React, { useState }from "react";
+import React, { useState, useEffect }from "react";
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { Form, Card, Col } from "react-bootstrap";
-import { QUERY_USER, QUERY_ME } from '../../utils/queries';
+import { Form, Card, Col, Alert } from "react-bootstrap";
+import { QUERY_USER, QUERY_ME, QUERY_GOALS } from '../../utils/queries';
 import { ADD_METRIC } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
@@ -13,7 +13,14 @@ const AddMetricForm = () => {
         margin: '.2em',
     }
 
+    const styleCountCol = {
+        width: '15px'
+    }
 
+    const headerBottomBorder = {
+        borderBottom: '3px solid #5292ab',
+    
+    }
 
     const { email: userParam } = useParams();
 
@@ -23,9 +30,40 @@ const AddMetricForm = () => {
   
     const user = data?.me || data?.user || {};
 
-    const [goalId, setGoalId] = useState('');
-    const [complete, setGoalComplete] = useState('false');
-    const [addMetric, { error }] = useMutation(ADD_METRIC);
+    const [validated] = useState(false);
+    
+    const [showErrorAlert, setShowErrorAlert] = useState(false);
+
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
+    const [addMetric, { error }] = useMutation(ADD_METRIC, {
+        write(cache, { data: { addMetric } }) {
+            try {
+              const { goals } = cache.readQuery({ query: QUERY_GOALS });
+      
+              cache.writeQuery({
+                query: QUERY_GOALS,
+                data: { goals: [addMetric, ...goals.metrics] },
+              });
+            } catch (e) {
+              console.error(e);
+            }
+      
+            const { me } = cache.readQuery({ query: QUERY_ME });
+            cache.writeQuery({
+              query: QUERY_ME,
+              data: { me: { ...me, goals: [...me.goals.metrics, addMetric] } },
+            });
+          },
+        });
+
+    useEffect(() => {
+        if (error) {
+          setShowErrorAlert(true);
+        } else { 
+          setShowErrorAlert(false);
+        }
+      }, [error, data]);
     
 
     if (loading) {
@@ -42,24 +80,66 @@ const AddMetricForm = () => {
     }
 
     
-    
-    const handleFormSubmit = async (event) => {
+    const handleSubmitMetric = async (event, complete, goalId, newTally) => {
         event.preventDefault();
 
-        console.log("ID: " + goalId + " complete " + complete )
-
+        if(complete) {
+           newTally ++;
+        }
+        
         try {
             const { data } = await addMetric({
                 variables: {
                     goalId,
-                    complete,
+                    newTally,
+                    complete
                 }
             })
-            
+            setShowSuccessAlert(true);
         } catch (err) {
             console.log(err);
         }
     };
+    
+
+    const AddMetricItem = (props) => {
+        const goal = props.goal;
+
+        const [goalId, setGoalId] = useState(null);
+        const [complete, setGoalComplete] = useState('false');
+        const [newTally, setTally] = useState(goal.tally);
+    
+        return(
+            <Form key={goal._id} style={style} className='row' name={goal.tally} onSubmit={
+                (event) => {
+                    try{
+                        handleSubmitMetric(event, complete, goalId, newTally)
+                    } catch (err) {
+                        console.log(err)
+                    }
+                }
+            }>
+                <Col id=''>
+                    {goal.description}
+                </Col>
+                <Col key={`inline-radio`} className="mb-3">
+                    <Form.Check
+                        inline
+                        name={goal._id}
+                        type="checkbox"
+                        onChange={(e) => setGoalComplete(e.currentTarget.checked)}
+                        onClick={(e) => setGoalId(e.target.name)}
+                    />
+                    <button type="submit" >
+                        Save
+                    </button>
+                </Col>
+                <Col style={styleCountCol}>
+                    {goal.tally}
+                </Col>
+            </Form>
+        )
+    }
   
     return (
         <>
@@ -69,29 +149,23 @@ const AddMetricForm = () => {
             </p>
          ) : (
              <>
-                <p>Enter daily status for goals here: </p>
-                <Card.Header className="row">
+                <>
+                    <Alert dismissible onClose={() => setShowSuccessAlert(false)} show={showSuccessAlert} variant='success'>
+                    Your status has been added!
+                    </Alert>
+                </>
+                <>
+                    <Alert dismissible onClose={() => setShowErrorAlert(false)} show={showErrorAlert} variant='danger'>
+                    Something went wrong with your submission!
+                    </Alert>
+                </>
+                <Card.Header className="row" style={headerBottomBorder}>
                     <Col>Goal</Col>
                     <Col>Completed Today?</Col>
+                    <Col style={styleCountCol}>Comp. Entries</Col>
                 </Card.Header>
                     {user.goals.map((goal) => (
-                        <Form key={goal._id} onSubmit={handleFormSubmit} className="row" style={style}>
-                            <Col>
-                            {goal.description}
-                            </Col>
-                            <Col key={`inline-radio`} className="mb-3">
-                                <Form.Check
-                                    inline
-                                    name={goal._id}
-                                    type="checkbox"
-                                    onChange={e => setGoalComplete(e.currentTarget.checked)}
-                                    onClick={e => setGoalId(e.target.name)}
-                                />
-                                <button type="submit">
-                                    Save
-                                </button>
-                            </Col>
-                        </Form>
+                        <AddMetricItem goal={goal} key={goal._id}/>
                     ))}
             </>
         )}

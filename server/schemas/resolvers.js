@@ -56,27 +56,6 @@ const resolvers = {
       return { token, user };
     },
 
-    updateGoal: async (parent, { _id, endDate }, context) => {
-
-      if (context.user) {
-        // Might need to change endDate to a date here
-        const goal = await Goal.findByIdAndUpdate(_id, {
-          endDate
-        });
-
-        // await User.findByIdAndUpdate(
-        //   { _id: context.user._id },
-        //   { $addToSet: { goals: goal._id } },
-        // );
-
-        return goal;
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-
-
-
-
     addGoal: async (parent, { description, endDate }, context) => {
 
       if (context.user) {
@@ -96,11 +75,14 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    addMetric: async (parent, { goalId, complete }, context) => {
+    addMetric: async (parent, { goalId, complete, newTally }, context) => {
       if (context.user) {
         return Goal.findOneAndUpdate(
           { _id: goalId },
           {
+            $set: {
+              tally: newTally,
+            },
             $addToSet: {
               metrics: { complete },
             },
@@ -114,6 +96,23 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
+    updateGoal: async (parent, { goalId, endDate, goalActive }, context) => {
+
+      if (context.user) {
+        return Goal.findOneAndUpdate(
+          { _id: goalId },
+          {
+            $set: {
+              endDate: endDate,
+              active: goalActive,
+            },
+          },
+
+        );
+      }
+
+        throw new AuthenticationError('You need to be logged in!');
+    },
 
   },
 };

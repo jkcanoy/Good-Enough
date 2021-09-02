@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client'
-import { Form, Col, Row, Alert } from "react-bootstrap";
-// import CalendarNew from "../CalendarNew";
+import { Form, Col, Row, Alert, DropdownButton, Dropdown } from "react-bootstrap";
 import Auth from '../../utils/auth'
 import { ADD_GOAL } from '../../utils/mutations';
 import DatePicker from 'react-datepicker';
@@ -65,10 +64,29 @@ const NewGoalForm = () => {
 
     ]
 
+    const styleDropdown = {
+        border: 'thin solid #b4bbc5',
+        borderRadius: '.25em',
+        marginRight: '.1em',
+        marginLeft: '.1em',
+        width: '75%',
+        height: '32px'
+    }
+
     const styleDatePicker = {
         width: '65%',
         marginLeft: 'auto',
         marginRight: 'auto',
+    }
+
+    const style = {
+        width: '30px',
+    }
+
+    const styleRow ={
+        display: 'flex',
+        aligntItems: 'center',
+        justifyContent: 'center',
     }
 
     const [description, setDescription] = useState('');
@@ -79,22 +97,25 @@ const NewGoalForm = () => {
     
     const [showErrorAlert, setShowErrorAlert] = useState(false);
 
-    const [showSuccessAlert, setShowSuccessAlert] = useState(true);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   
     const [addGoal, { error, data }] = useMutation(ADD_GOAL);
     
     useEffect(() => {
-      if (error) {
+      if (error, data) {
         setShowErrorAlert(true);
+      } if (data) {
+        setShowErrorAlert(false);
+        setShowSuccessAlert(true);
       } else { 
         setShowErrorAlert(false);
       }
-    }, [error]);
+    }, [error, data]);
 
     
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log(endDate)
+        console.log(description + endDate)
 
         try {
           const { data } = await addGoal({
@@ -106,10 +127,11 @@ const NewGoalForm = () => {
         } catch (err) {
           console.log(err);
         }
-        setDescription('')
-        setEndDate(new Date())
-        console.log(endDate)
-        delaySetState2();
+
+        setDescription('');
+        setEndDate('');
+       
+        // delaySetState2();
     };
 
     function delaySetState2() {
@@ -125,24 +147,37 @@ const NewGoalForm = () => {
         <>
         {Auth.loggedIn() ? (
         <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-            { data ? (
+            
                 <>
                     <Alert dismissible onClose={() => setShowSuccessAlert(false)} show={showSuccessAlert} variant='success'>
                     Your goal has been added!
                     </Alert>
                 </>
-            ) : (
                 <>
                     <Alert dismissible onClose={() => setShowErrorAlert(false)} show={showErrorAlert} variant='danger'>
                     Something went wrong with your submission!
                     </Alert>
                     <Form.Group className="my-2">
                         <Form.Label>Select a Goal:</Form.Label>
-                        <Form.Select name='description' onChange={e => setDescription(e.currentTarget.value)}>
-                            {defaultGoals.map((goal) => (
-                            <option key={goal.id} value={goal.description}>{goal.description}</option>
-                            ))}
-                        </Form.Select>
+                        <Row style={styleRow}>
+                            <div style={styleDropdown}> 
+                                <p >{description}</p>
+                            </div>
+                            <div style={style}>
+                                <DropdownButton
+                                    title='꫱'
+                                    style={style}
+                                    drop='start'
+                                    id="dropdown"
+                                    name={description} 
+                                    onSelect={e => setDescription(e)} >
+                                    {defaultGoals.map((goal) => (
+                                    <Dropdown.Item key={goal.id} eventKey={goal.description}>{goal.description}</Dropdown.Item>
+                                    ))}
+                                </DropdownButton>
+                            </div>
+                        </Row>
+                       
                     </Form.Group>
                     <Row>
                         <Col sm>
@@ -168,7 +203,7 @@ const NewGoalForm = () => {
                         </Col>
                     </Row>
                 </>
-            )}
+            
         </Form>
         ) : (
             <p>

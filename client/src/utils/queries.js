@@ -14,7 +14,6 @@ export const QUERY_USER = gql`
         active
         tally
         date_created
-        date_archived
         endDate
         metrics {
           _id
@@ -34,8 +33,12 @@ export const QUERY_GOALS = gql`
       active
       tally
       date_created
-      date_archived
       endDate
+      metrics {
+        _id
+        complete
+        date
+      }
     }
   }
 `;
@@ -48,7 +51,6 @@ export const QUERY_SINGLE_GOAL = gql`
       active
       tally
       date_created
-      date_archived
       endDate
       metrics {
         _id
@@ -72,7 +74,6 @@ export const QUERY_ME = gql`
         active
         tally
         date_created
-        date_archived
         endDate
         metrics{
           _id

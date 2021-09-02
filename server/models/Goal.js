@@ -23,12 +23,6 @@ const goalSchema = new Schema({
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
-  date_archived: {
-    type: Date,
-    required: false,
-    default: null,
-    get: (timestamp) => dateFormat(timestamp),
-  },
   endDate: {
     type: Date,
     required: false,
