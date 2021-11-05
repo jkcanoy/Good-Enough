@@ -67,6 +67,10 @@ Must have a connection in Robo-3T.
 
 ## Demo
 
+The following screenshot shows the application's homepage
+
+![Application homepage](./client/public/screenShot.png)
+
 The following gif shows the design and functionality of the application
 
 [A user can register on signup page, then can see their empty dashboard. They then add goals and choose end dates. The user can see their list of goals and check off if the goal has been completed for the day. They can also edit the end date and see a radial chart comparing each goal and number of completions](/client/public/GoodEnuff.gif)
